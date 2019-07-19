@@ -1,0 +1,71 @@
+{
+  "name": "active-citizen",
+  "version": "1.0.0",
+  "description": "active-citizen",
+  "author": {
+    "name": "Konstantin",
+    "email": "prilipko@novotorica.com",
+    "url": "https://gitlab.getsarafan.com/prilipko"
+  },
+  "keywords": [],
+  "engines": {
+    "node": ">= 11.15.0"
+  },
+  "main": "app",
+  "scripts": {
+    "start": "NODE_ENV=production node app",
+    "dev": "NODE_ENV=development nodemon --quiet | pino-pretty -c -l -t",
+    "test": "NODE_ENV=test jest --passWithNoTests --runInBand",
+    "test:unit": "npm test -- test/unit",
+    "test:integration": "npm test -- test/integration --runInBand",
+    "test:watch": "npm test -- --watch",
+    "test:watch:unit": "npm run test:unit -- --watch",
+    "test:watch:integration": "npm run test:integration -- --watch",
+    "test:coverage": "npm test -- --coverage",
+    "test:coverage:unit": "npm run test:unit -- --coverage",
+    "test:coverage:integration": "npm run test:integration -- --coverage",
+    "lint": "eslint app test",
+    "lint:app": "eslint app",
+    "lint:test": "eslint test",
+    "db:migrate": "node_modules/.bin/sequelize db:migrate",
+    "db:migrate:undo": "node_modules/.bin/sequelize db:migrate:undo",
+    "db:seed": "node_modules/.bin/sequelize db:seed",
+    "db:seed:all": "node_modules/.bin/sequelize db:seed:all",
+    "db:refresh": "node scripts/dbRefresh.js && node_modules/.bin/sequelize db:migrate",
+    "db:prepare": "npm run db:refresh && npm run db:seed:all"
+  },
+  "dependencies": {
+    "@kasa/koa-logging": "^0.3.0",
+    "@kasa/koa-request-id": "^2.0.1",
+    "@koa/cors": "^3.0.0",
+    "ajv": "^6.10.0",
+    "dotenv": "^7.0.0",
+    "json-schema-deref-sync": "^0.10.0",
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-router": "^7.4.0",
+    "node-fetch": "^2.6.0",
+    "pg": "^7.11.0",
+    "pino": "^5.12.3",
+    "sequelize": "^5.9.4",
+    "swagger-jsdoc": "^3.2.9"
+  },
+  "devDependencies": {
+    "coveralls": "^3.0.3",
+    "eslint": "^5.16.0",
+    "eslint-config-kasa": "^0.4.0",
+    "husky": "^2.1.0",
+    "jest": "^24.7.1",
+    "jest-extended": "^0.11.1",
+    "jest-junit": "^6.3.0",
+    "koa-mount": "^4.0.0",
+    "koa-static": "^5.0.0",
+    "lint-staged": "^8.1.5",
+    "nodemon": "^1.18.11",
+    "pino-pretty": "^3.0.0",
+    "prettier": "^1.17.0",
+    "sequelize-cli": "^5.5.0",
+    "supertest": "^4.0.2"
+  }
+}

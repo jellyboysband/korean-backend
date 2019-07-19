@@ -1,0 +1,15 @@
+/spec:
+  get:
+    tags:
+    - misc
+    summary: Get Open API Specification.
+    operationId: MiscController.getSwaggerSpec
+    responses:
+      '200':
+        x-summary: OK
+        description: Describe Swagger Open API Specification
+        content:
+          application/json:
+            schema:
+              type: object
+ 

@@ -1,0 +1,597 @@
+components: 
+  securitySchemes:
+    userTokenSecurity:
+      type: apiKey
+      in: header
+      name: token
+  schemas:
+    Institution:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - title
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+
+    Agency:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - title
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+    Images:
+      type: array
+      items: 
+        type: string
+        format: uri
+    BasicList:
+      type: object
+      required:
+        - limit
+        - offset
+        - count
+      properties:
+        limit:
+          type: integer
+          default: 100
+          minimum: 1
+          maximum: 1000
+        offset:
+          type: integer
+          default: 0
+          minimum: 0
+        count:
+          type: integer 
+          minimum: 0 
+    Password:
+      type: string
+    Email:
+      type: string
+      format: email
+      pattern: '.+@.+\..+' 
+    Phone:
+      type: string 
+      pattern: '^\+7[0-9]{10,16}$' 
+    UserMinimum:
+      type: object
+      required:
+        - id
+        - firstName
+        - lastName
+        - avatar
+        - balance
+        - sex
+        - height
+        - weight
+        - email
+        - birthDate
+        - googleEmail
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          oneOf:
+            - type: string
+            - type: 'null'
+        avatar:
+          oneOf:
+            - type: string
+              format: uri
+            - type: 'null'
+        balance:
+          type: integer
+        sex:
+          oneOf:
+            - type: boolean
+            - type: 'null'
+        height:
+          oneOf:
+            - type: integer
+            - type: 'null'
+        weight:
+          oneOf:
+            - type: integer
+            - type: 'null'
+        email:
+          $ref: '#/components/schemas/Email'
+        birthDate:
+          oneOf:
+            - type: string
+              format: date
+            - type: 'null'
+        googleEmail:
+          oneOf:
+            - $ref: '#/components/schemas/Email' 
+            - type: 'null'
+          
+    FitData:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - runDistance
+        - walkDistance
+        - bicycleDistance
+        - activityTime
+      properties:
+        id:
+          type: integer
+        runDistance:
+          type: integer
+        walkDistance:
+          type: integer
+        bicycleDistance:
+          type: integer
+        activityTime:
+          type: integer 
+    Activity:
+      type: object 
+      required:
+        - source
+        - startTime
+        - endTime
+        - activityType
+        - dataSourceId
+      properties:
+        source:
+          type: string
+          enum: 
+            - googleFit
+            - appleHealth
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        activityType:
+          type: string
+        dataSourceId:
+          type: string
+    MapData: 
+      type: object
+      required:
+        - timestamp
+        - latitude
+        - longitude
+      additionalProperties: false
+      properties:
+        timestamp:
+          type: integer
+        latitude:
+          type: number 
+        longitude:
+          type: number 
+    ActivityList:
+      allOf:
+        - $ref: '#/components/schemas/BasicList'
+        - type: object
+          required:
+            - list 
+          properties:
+            list: 
+              type: array
+              items:
+                allOf:
+                  - $ref: '#/components/schemas/Activity'
+                  - type: object
+                    required:
+                      - id
+                      - userId
+                      - status 
+                    properties:
+                      id:
+                        type: integer
+                      userId:
+                        type: integer
+                      status:
+                        type: string
+                        enum: 
+                          - UNVERIFIED
+                          - RESOLVED
+                          - REJECTED
+              
+    FullActivity:
+      allOf:
+        - $ref: '#/components/schemas/Activity'
+        - type: object 
+          required:
+            - id
+            - userId
+            - status 
+            - mapData
+          properties:
+            id:
+              type: integer
+            userId:
+              type: integer
+            status:
+              type: string
+              enum: 
+                - UNVERIFIED
+                - RESOLVED
+                - REJECTED
+            mapData: 
+              type: array
+              items: 
+                $ref: '#/components/schemas/MapData'
+    BasicPartner:
+      type: object 
+      required:
+        - title
+        - description
+        - url 
+        - address
+        - phone
+        - email 
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+          format: uri 
+        address:
+          oneOf:
+            - type: 'null'
+            - type: string
+        phone: 
+          oneOf:
+            - $ref: '#/components/schemas/Phone'
+            - type: 'null'
+        email:
+          oneOf:
+            - $ref: '#/components/schemas/Email'
+            - type: 'null'
+    Partner:
+      allOf:
+      - $ref: '#/components/schemas/BasicPartner'
+      - type: object 
+        required: 
+          - institutionId
+          - agencyId
+        properties: 
+          institutionId:
+            type: integer
+          agencyId:
+            type: integer
+    PartnerList:
+      allOf:
+        - $ref: '#/components/schemas/BasicList'
+        - type: object
+          required:
+            - list 
+          properties:
+            list: 
+              type: array
+              items:
+                allOf:
+                  - $ref: '#/components/schemas/Partner'
+                  - type: object
+                    required:
+                      - id 
+                      - images
+                    properties:
+                      id:
+                        type: integer
+                      images:
+                        $ref: '#/components/schemas/Images'
+
+    FullPartner:
+      allOf:
+        - $ref: '#/components/schemas/BasicPartner'
+        - type: object 
+          required:
+            - id 
+            - institution 
+            - agency
+            - images
+          properties:
+            id:
+              type: integer
+            institution:
+              $ref: '#/components/schemas/Institution'
+            agency:
+              $ref: '#/components/schemas/Agency' 
+            images:
+              type: array
+              items: 
+                type: string
+                format: uri
+
+    BasicProduct:
+      type: object 
+      required:
+        - price
+        - title
+        - description
+        - rawData
+        - isPrize
+        - isFinished
+        - count
+        - expireDate
+        - startTime
+        - endTime
+        - url
+        - discountPercent
+        - discountMoney
+        - uniqueKey
+      properties:
+        price:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        rawData:
+          type: object
+        isPrize:
+          type: boolean
+        isFinished:
+          type: boolean
+        count:
+          oneOf:
+            - type: integer
+              minimum: 0
+            - type: 'null'
+        expireDate:
+          oneOf:
+            - type: string
+              format: date-time
+            - type: 'null'
+        startTime:
+          oneOf:
+            - type: string
+              format: date-time
+            - type: 'null'
+        endTime:
+          oneOf:
+            - type: string
+              format: date-time
+            - type: 'null'
+        url:
+          oneOf:
+            - type: string
+              format: uri
+            - type: 'null'
+        discountPercent:
+          oneOf:
+            - type: integer
+            - type: 'null'
+        discountMoney:
+          oneOf:
+            - type: integer
+            - type: 'null'
+        uniqueKey:
+          oneOf:
+            - type: string 
+            - type: 'null'
+    Product:
+      allOf:
+      - $ref: '#/components/schemas/BasicProduct'
+      - type: object 
+        required: 
+          - partnerId
+        properties: 
+          partnerId:
+            type: integer
+    ProductList:
+      allOf:
+        - $ref: '#/components/schemas/BasicList'
+        - type: object
+          required:
+            - list 
+          properties:
+            list: 
+              type: array
+              items:
+                allOf:
+                  - $ref: '#/components/schemas/Product'
+                  - type: object
+                    required:
+                      - id
+                      - images
+                    properties:
+                      id:
+                        type: integer 
+                      images:
+                        $ref: '#/components/schemas/Images'
+
+    FullProduct:
+      allOf:
+        - $ref: '#/components/schemas/BasicProduct'
+        - type: object 
+          required:
+            - id 
+            - images
+            - partner
+          properties:
+            id:
+              type: integer
+            images:
+              $ref: '#/components/schemas/Images'
+            partner: 
+              required:
+                - id
+                - title
+              properties:
+                id:
+                  type: integer
+                title:
+                  type: string
+    Invoice:
+      required:
+        - id
+        - accountId
+        - transactionId
+        - userId
+        - productId
+        - type
+      properties:
+        id:
+          type: integer
+        accountId:
+          type: integer
+        transactionId:
+          type: integer
+        userId:
+          type: integer
+        productId:
+          type: integer
+        type:
+          type: string
+          enum: ['TAKE','GIVE']
+    Purchase:
+      required:
+        - userId
+        - productId
+        - expireDate
+        - isActivated
+        - isFinished
+        - createdAt
+      properties:
+        userId:
+          type: integer
+        productId:
+          type: integer
+        expireDate:
+          oneOf:
+            - type: string
+              formate: date-time
+            - type: 'null'
+        isActivated:
+          type: boolean
+        isFinished:
+          type: boolean
+        createdAt:
+          type: string
+          formate: date-time
+    PurchaseList:
+      allOf:
+        - $ref: '#/components/schemas/BasicList'
+        - type: object
+          required:
+            - list 
+          properties:
+            list: 
+              type: array
+              items:
+                $ref: '#/components/schemas/Purchase'
+
+    # GoogleCredentials:
+    #   allOf:
+    #     - oneOf: 
+    #         - type: object 
+    #           required:
+    #             - id_token
+    #           properties:
+    #             id_token:
+    #               type: string 
+    #         - type: object 
+    #           required:
+    #             - refresh_token
+    #           properties:
+    #             refresh_token:
+    #               type: string 
+    #     - type: object
+    #       required:
+    #         - access_token
+    #         - scope
+    #         - token_type
+    #         - expiry_date
+    #       properties:
+    #         access_token:
+    #           type: string
+    #         scope:
+    #           type: string
+    #         token_type:
+    #           type: string
+    #         expiry_date:
+    #           type: integer
+    # ResponseStatus:
+    #   type: string
+    #   enum: [success, fail, error]
+    # ResponseCodeForFailure:
+    #   type: string
+    #   enum:
+    #   - UNKNOWN_ENDPOINT
+    #   - INVALID_REQUEST
+    # ResponseCodeForError:
+    #   type: string
+    #   enum:
+    #   - UNKNOWN_ERROR
+    #   - INTERNAL_ERROR
+    # SuccessResponse:
+    #   type: object
+    #   properties:
+    #     status:
+    #       $ref: '#/components/schemas/ResponseStatus'
+    #     data:
+    #       type: object
+    #       nullable: true
+    #     message:
+    #       type: string
+    #   required:
+    #   - status
+    #   - data
+    #   - message
+    # FailureResponse:
+    #   type: object
+    #   properties:
+    #     status:
+    #       $ref: '#/components/schemas/ResponseStatus'
+    #     code:
+    #       $ref: '#/components/schemas/ResponseCodeForFailure'
+    #     data:
+    #       type: array
+    #       items:
+    #         type: object
+    #         properties:
+    #           param:
+    #             type: string
+    #           message:
+    #             type: string
+    #       nullable: true
+    #     message:
+    #       type: string
+    #   required:
+    #   - status
+    #   - code
+    #   - data
+    #   - message
+    # ErrorResponse:
+    #   type: object
+    #   properties:
+    #     status:
+    #       $ref: '#/components/schemas/ResponseStatus'
+    #     code:
+    #       $ref: '#/components/schemas/ResponseCodeForFailure'
+    #     data:
+    #       type: array
+    #       items:
+    #         type: object
+    #         properties:
+    #           param:
+    #             type: string
+    #           message:
+    #             type: string
+    #       nullable: true 
+    #     message:
+    #       type: string
+    #   required:
+    #   - status
+    #   - code
+    #   - data
+    #   - message
