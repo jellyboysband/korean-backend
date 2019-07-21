@@ -6,13 +6,12 @@
     - brand
     security: 
       - apiKey: []
-    parameters:
-      - name: args
-        required: true
-        in: body
-        schema:
-          $ref: '#/components/schemas/BrandCreate'
-
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BrandCreate'  
     responses:
       '200': {$ref: '#/components/responses/ListBrand'}
       default: {$ref: '#/components/responses/GenericError'}
@@ -40,6 +39,5 @@
         in: query
         type: integer
 
-    responses:
-      '200': {$ref: '#/components/responses/NoContent'}
+    responses: 
       default: {$ref: '#/components/responses/GenericError'}

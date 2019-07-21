@@ -1,0 +1,40 @@
+/products:
+  get: 
+    operationId: user/ProductController.list
+    tags:
+    - product 
+    parameters:
+      - name: query
+        type: string
+        in: query
+      - name: brand
+        type: integer
+        in: query
+      - name: limit
+        type: integer
+        minimum: 1
+        maximum: 1000
+        in: query
+        default: 1000
+      - name: offset
+        type: integer
+        in: query
+        default: 0
+    responses:
+      '200':  {$ref: '#/components/responses/ListProduct'}
+      default: {$ref: '#/components/responses/GenericError'}
+
+/product/{productID}:
+  get:
+    tags:
+    - product 
+    operationId: user/ProductController.get
+    parameters:
+      - in: path
+        name: productID
+        description: Track ID.
+        required: true
+        type: integer
+    responses:
+      '200':  {$ref: '#/components/responses/OneProduct'}
+      default: {$ref: '#/components/responses/GenericError'}

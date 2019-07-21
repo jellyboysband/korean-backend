@@ -1,0 +1,81 @@
+/admins:
+  post:
+    tags:
+    - admin
+    description: "create admin."
+    operationId: admin/AdminController.create 
+    security: 
+      - apiKey: [] 
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LoginInfo'
+    responses:
+      '200':
+        x-summary: OK
+        description: OK 
+        content:
+          application/json:
+            schema:
+              type: object 
+              required:
+                - id
+              properties:
+                id:
+                  $ref: '#/components/schemas/ID'
+  get:
+    tags:
+    - admin
+    description: "get admin list."
+    operationId: admin/AdminController.list  
+    security: 
+      - apiKey: [] 
+    parameters: 
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
+      - $ref: '#/components/parameters/Order'
+
+    responses:
+      '200': {$ref: '#/components/responses/ListAdmin'}
+/admins/{id}: 
+  get:
+    tags:
+    - admin
+    description: "get admin by id."
+    operationId: admin/AdminController.get
+    security: 
+      - apiKey: [] 
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    responses:
+      '200':
+        x-summary: OK
+        description: OK 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Admin'
+  delete:
+    tags:
+    - admin
+    description: "delete admin by id."
+    operationId: admin/AdminController.delete
+    security: 
+      - apiKey: [] 
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    responses:
+      '200':
+        x-summary: OK
+        description: OK 
+        content:
+          application/json:
+            schema:
+              type: object 
+              required:
+                - id
+              properties:
+                id:
+                  $ref: '#/components/schemas/ID'

@@ -10,8 +10,8 @@ const jwtManager = new JwtManager(adminJwtKey);
 
 class AuthController {
   static async login(ctx) {
-    const { login, password } = ctx.BODY;
-    const admin = await AdminService.getByLogin(login);
+    const { username, password } = ctx.BODY;
+    const admin = await AdminService.getByUsername(username);
     if (!admin) {
       ctx.throw(STATUS_CODES.NOT_FOUND, 'admin not found');
     }
@@ -22,9 +22,10 @@ class AuthController {
 
     const token = jwtManager.getToken(admin.id);
 
-    await AdminService.login(admin.id, token);
+    await AdminService.login(admin.id, admin.tokens.concat(token));
 
     ctx.body = {
+      username,
       token
     };
   }
