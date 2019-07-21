@@ -1,0 +1,45 @@
+/brand:
+  post:
+    description: "Create new brand"
+    operationId: admin/BrandController.create
+    tags:
+    - brand
+    security: 
+      - apiKey: []
+    parameters:
+      - name: args
+        required: true
+        in: body
+        schema:
+          $ref: '#/components/schemas/BrandCreate'
+
+    responses:
+      '200': {$ref: '#/components/responses/ListBrand'}
+      default: {$ref: '#/components/responses/GenericError'}
+
+  get:
+    description: "Get list brand"
+    tags:
+    - brand
+    operationId: admin/BrandController.get
+
+    responses:
+      '200':  {$ref: '#/components/responses/ListBrand'}
+      default: {$ref: '#/components/responses/GenericError'}
+
+  delete:
+    description: "Delete brand"
+    operationId: admin/BrandController.delete
+    tags:
+    - brand
+    security: 
+      - apiKey: []
+    parameters:
+      - name: id
+        required: true
+        in: query
+        type: integer
+
+    responses:
+      '200': {$ref: '#/components/responses/NoContent'}
+      default: {$ref: '#/components/responses/GenericError'}

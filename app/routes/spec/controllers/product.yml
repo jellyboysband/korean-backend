@@ -1,0 +1,76 @@
+/products:
+  get: 
+    operationId: admin/ProductController.list
+    tags:
+    - product 
+    parameters:
+      - name: query
+        type: string
+        in: query
+      - name: brand
+        type: integer
+        in: query
+      - name: limit
+        type: integer
+        minimum: 1
+        maximum: 1000
+        in: query
+        default: 1000
+      - name: offset
+        type: integer
+        in: query
+        default: 0
+    responses:
+      '200':  {$ref: '#/components/responses/ListProduct'}
+      default: {$ref: '#/components/responses/GenericError'}
+
+/product:
+  post:
+    description: "Create new product"
+    operationId: admin/ProductController.create
+    tags:
+    - product
+    security: 
+      - apiKey: []
+    parameters:
+      - name: args
+        in: body
+        required: true
+        schema:
+          $ref: '#/components/schemas/ProductCreate'
+
+    responses:
+      '200': {$ref: '#/components/responses/OneProduct'}
+      default: {$ref: '#/components/responses/GenericError'}
+
+  delete:
+    description: "Delete product"
+    operationId: admin/ProductController.delete
+    tags:
+    - product
+    security: 
+      - apiKey: []
+    parameters:
+      - name: id
+        required: true
+        in: query
+        type: integer
+
+    responses:
+      '200': {$ref: '#/components/responses/NoContent'}
+      default: {$ref: '#/components/responses/GenericError'}
+
+/product/{productID}:
+  get:
+    tags:
+    - product 
+    operationId: admin/ProductController.get
+    parameters:
+      - in: path
+        name: productID
+        description: Track ID.
+        required: true
+        type: integer
+    responses:
+      '200':  {$ref: '#/components/responses/OneProduct'}
+      default: {$ref: '#/components/responses/GenericError'}

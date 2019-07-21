@@ -12,4 +12,3 @@
           application/json:
             schema:
               type: object
- 
