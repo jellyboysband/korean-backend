@@ -36,6 +36,6 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
 
-    NoContent:
-      description: The server successfully processed the request and is not returning any content.
+    # NoContent:
+    #   description: The server successfully processed the request and is not returning any content.
 
