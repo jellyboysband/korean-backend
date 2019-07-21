@@ -7,19 +7,7 @@ services:
 
 
 env:
-  - DB_HOST="localhost"
-  - DB_PORT="5432"
-  - DB_DIALECT="postgres"
-  - DB_POOL_MAX="1"
-  - DB_POOL_MIN="1"
-  - DB_NAME="travis_ci_test"
-  - DB_USER="postgres"
-  - DB_PASSWORD=""
-
-  - ADMIN_SALT="asdvndosnnsdvasdfw3tfgsdavijnv"
-  - ADMIN_JWT_KEY="3223C23WEFCZDVAFsdsfsdfg"
-  - USER_SALT="asdvndosnnsdivgzcxvxcvwesZXzvcadcasdjnv"
-  - USER_JWT_KEY="asdvnddafscvzcvdfcosnnsdijnv"
+  - DB_HOST="localhost" DB_PORT="5432" DB_DIALECT="postgres" DB_POOL_MAX="1" DB_POOL_MIN="1" DB_NAME="travis_ci_test" DB_USER="postgres" DB_PASSWORD="" ADMIN_SALT="asdvndosnnsdvasdfw3tfgsdavijnv" ADMIN_JWT_KEY="3223C23WEFCZDVAFsdsfsdfg" USER_SALT="asdvndosnnsdivgzcxvxcvwesZXzvcadcasdjnv" USER_JWT_KEY="asdvnddafscvzcvdfcosnnsdijnv"
 
 install:
   - yarn install
