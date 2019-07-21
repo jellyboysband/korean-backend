@@ -1,56 +1,41 @@
 components:
   responses:
-    # NoContent:
-    #   x-summary: No Content
-    #   description: No Content
-    # Unauthorized:
-    #   x-summary: Unauthorized
-    #   description: Unauthorized
-    #   content:
-    #     application/json:
-    #       schema:
-    #         $ref: '#/components/schemas/FailureResponse'
-    #       examples:
-    #         UNAUTHORIZED:
-    #           value:
-    #             status: 'fail'
-    #             code: 'UNAUTHORIZED'
-    #             data: null
-    #             message: 'Login Required.'
-    # UnknownResource:
-    #   x-summary: Not Found
-    #   description: Not Found
-    #   content:
-    #     application/json:
-    #       schema:
-    #         $ref: '#/components/schemas/FailureResponse'
-    #       examples:
-    #         UNKNOWN_RESOURCE:
-    #           value:
-    #             status: 'fail'
-    #             code: 'UNKNOWN_RESOURCE'
-    #             data: null
-    #             message: 'The specified resource was not found.'
-    # InternalServerError:
-    #   x-summary: Internal Server Error
-    #   description: Internal Server Error
-    #   content:
-    #     application/json:
-    #       schema:
-    #         $ref: '#/components/schemas/ErrorResponse'
-    #       examples:
-    #         UNKNOWN_ERROR:
-    #           value:
-    #             status: 'error'
-    #             code: 'UNKNOWN_ERROR'
-    #             data: null
-    #             message: 'The server encountered an unknown error.'
-    #         INTERNAL_ERROR:
-    #           value:
-    #             status: 'error'
-    #             code: 'INTERNAL_ERROR'
-    #             data: null
-    #             message: 'The server encountered an internal error.'
-    # NotImplemented:
-    #   x-summary: Not Implemented
-    #   description: Not Implemented
+    ListBrand:
+      description: Getting a list of brands.
+      x-summary: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Brand'
+
+    ListProduct:
+      description: Receive a list of products.
+      x-summary: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Product'
+
+    OneProduct:
+      description: Getting one product.
+      x-summary: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Product'
+
+    GenericError:
+      description: Generic error response.
+      x-summary: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    NoContent:
+      description: The server successfully processed the request and is not returning any content.
+

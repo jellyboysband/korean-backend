@@ -1,0 +1,19 @@
+
+/avatar/{productID}:
+  put:
+    operationId: admin/AvatarController.uploadAvatarProduct
+    consumes:
+      - multipart/form-data
+    tags:
+    - avatar 
+    parameters:
+      - in: path
+        name: productID
+        description: Product ID.
+        required: true
+        type: integer
+      - in: formData
+        name: file
+        type: file
+        required: true  
+ 

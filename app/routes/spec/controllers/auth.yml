@@ -1,0 +1,45 @@
+/login:
+  post:
+    tags:
+    - auth
+    description: "Auth method."
+    operationId: admin/AuthController.login 
+    parameters:
+      - name: args
+        in: body
+        schema:
+          $ref: '#/components/schemas/LoginInfo'
+    responses:
+      '200':
+        x-summary: OK
+        description: OK
+        headers:
+          AdminCookie:
+            type: string
+            description: Session token.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInfo'
+
+/profile:
+  get:
+    description: "get admin profile"
+    operationId: admin/AuthController.profile
+    tags:
+    - auth
+    security: 
+      - apiKey: []
+    parameters:
+      - name: args
+        in: body
+        schema:
+          $ref: '#/components/schemas/LoginInfo'
+    responses:
+      '200':
+        description: OK 
+        x-summary: OK
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInfo'
