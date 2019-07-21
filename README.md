@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/jellyboysband/korean-backend.svg?branch=master)](https://travis-ci.org/jellyboysband/korean-backend)
 ## Getting Started
 
 ```zsh
