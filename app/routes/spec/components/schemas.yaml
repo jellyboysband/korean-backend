@@ -7,6 +7,25 @@ components:
       name: AdminCookie
       
   schemas:
+    BasicList:
+      type: object
+      required:
+        - limit
+        - offset
+        - count
+      properties:
+        limit:
+          type: integer
+          default: 100
+          minimum: 1
+          maximum: 1000
+        offset:
+          type: integer
+          default: 0
+          minimum: 0
+        count:
+          type: integer 
+          minimum: 0 
     Brand:
       type: object
       required:
@@ -88,7 +107,7 @@ components:
         brandID:
           type: integer
 
-    UserInfo:
+    AdminInfo:
       type: object
       required:
         - username
@@ -96,6 +115,16 @@ components:
       properties:
         token:
           type: string
+        username:
+          $ref: '#/components/schemas/Username'
+    Admin:
+      type: object
+      required:
+        - username
+        - id
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
         username:
           $ref: '#/components/schemas/Username'
 
@@ -107,7 +136,6 @@ components:
 
     Password:
       type: string
-      format: password
       minLength: 1
       maxLength: 100
       description: User password.

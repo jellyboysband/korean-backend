@@ -4,11 +4,12 @@
     - auth
     description: "Auth method."
     operationId: admin/AuthController.login 
-    parameters:
-      - name: args
-        in: body
-        schema:
-          $ref: '#/components/schemas/LoginInfo'
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LoginInfo' 
     responses:
       '200':
         x-summary: OK
@@ -20,7 +21,7 @@
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserInfo'
+              $ref: '#/components/schemas/AdminInfo'
 
 /profile:
   get:
@@ -29,12 +30,13 @@
     tags:
     - auth
     security: 
-      - apiKey: []
-    parameters:
-      - name: args
-        in: body
-        schema:
-          $ref: '#/components/schemas/LoginInfo'
+      - apiKey: [] 
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LoginInfo'
     responses:
       '200':
         description: OK 
@@ -42,4 +44,4 @@
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserInfo'
+              $ref: '#/components/schemas/AdminInfo'

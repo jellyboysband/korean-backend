@@ -1,0 +1,10 @@
+/brand:
+  get:
+    description: "Get list brand"
+    tags:
+    - brand
+    operationId: user/BrandController.get
+
+    responses:
+      '200':  {$ref: '#/components/responses/ListBrand'}
+      default: {$ref: '#/components/responses/GenericError'}

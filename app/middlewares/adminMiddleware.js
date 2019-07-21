@@ -17,7 +17,7 @@ class AdminMiddleware {
     }
     const admin = await AdminService.getById(id);
 
-    if (!admin || admin.token !== token) {
+    if (!admin || !admin.token.includes(token)) {
       // ctx.status = UNAUTHORIZED;
       ctx.throw(UNAUTHORIZED, 'unauthorized');
     }

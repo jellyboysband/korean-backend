@@ -31,14 +31,13 @@
     tags:
     - product
     security: 
-      - apiKey: []
-    parameters:
-      - name: args
-        in: body
-        required: true
-        schema:
-          $ref: '#/components/schemas/ProductCreate'
-
+      - apiKey: []  
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProductCreate'
     responses:
       '200': {$ref: '#/components/responses/OneProduct'}
       default: {$ref: '#/components/responses/GenericError'}
@@ -56,8 +55,7 @@
         in: query
         type: integer
 
-    responses:
-      '200': {$ref: '#/components/responses/NoContent'}
+    responses: 
       default: {$ref: '#/components/responses/GenericError'}
 
 /product/{productID}:

@@ -17,7 +17,7 @@ class Seq {
   }
 }
 
-const modelPath = path.join(__dirname, '../src/models');
+const modelPath = path.join(__dirname, '../models');
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -26,6 +26,9 @@ module.exports = {
     });
 
     fs.readdirSync(modelPath).forEach(file => {
+      if (path.extname(file) !== '.js') {
+        return;
+      }
       const model = require(path.join(modelPath, file));
       const sequelize = new Seq();
       model(sequelize, Sequelize);
@@ -34,11 +37,13 @@ module.exports = {
         queryInterface.createTable(sequelize.getTable(), sequelize.getAttributes())
       );
     });
-
     promise.then(() => {
-      // TODO: тут добавляем индексы
+      // queryInterface.sequelize.query(`
+      // create index admins_username_index
+      // on postgres.public.admins (username) where deleted = false OR deleted is null;
+      // `);
+      // // TODO: тут добавляем индексы
     });
-
     return promise;
   }
 };

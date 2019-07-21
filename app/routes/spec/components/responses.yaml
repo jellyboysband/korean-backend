@@ -1,5 +1,6 @@
 components:
   responses:
+    
     ListBrand:
       description: Getting a list of brands.
       x-summary: OK
@@ -19,6 +20,24 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/Product'
+
+    ListAdmin:
+      description: Receive a list of admins.
+      x-summary: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/BasicList'
+              - type: object
+                required:
+                  - list 
+                properties:
+                  list: 
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Admin'
+
 
     OneProduct:
       description: Getting one product.
