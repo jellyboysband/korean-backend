@@ -26,6 +26,8 @@ const configs = {
           evict: 1000000,
           idle: 1000000
         },
+
+        // eslint-disable-next-line no-console
         logging: process.env.DB_LOGGING === 'true' ? console.log : false
       },
       database: process.env.DB_NAME,
