@@ -17,7 +17,7 @@ describe('Misc', () => {
   describe('GET /spec', () => {
     it('<200> should always return API specification in swagger format', async () => {
       const res = await request
-        .get('/spec')
+        .get('/api/spec')
         .expect('Content-Type', /json/)
         .expect(200);
 
