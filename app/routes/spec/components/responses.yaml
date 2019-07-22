@@ -55,6 +55,19 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
 
+    AfterCreate: 
+      description: request after create.
+      x-summary: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - id
+            properties:
+              id:
+                $ref: '#/components/schemas/ID'
+
     # NoContent:
     #   description: The server successfully processed the request and is not returning any content.
 
