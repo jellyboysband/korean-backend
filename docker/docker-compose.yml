@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+
+  korean-db:
+    container_name: korean-db
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: "postgresql"
+      POSTGRES_DB: "postgresql"
+      POSTGRES_PASSWORD: postgresql
