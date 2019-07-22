@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, Sequelize) => {
-  const product = sequelize.define(
+  const admin = sequelize.define(
     'admins',
     {
       id: {
@@ -39,8 +39,8 @@ module.exports = (sequelize, Sequelize) => {
     }
   );
   // eslint-disable-next-line
-  product.associate = models => {
-    // models.Product.belongsTo(models.Partner, { foreignKey: 'partnerId', targetKey: 'id' });
+  admin.associate = models => {
+    // models.Admin.belongsTo(models.Partner, { foreignKey: 'partnerId', targetKey: 'id' });
   };
-  return product;
+  return admin;
 };

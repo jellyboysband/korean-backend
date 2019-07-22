@@ -1,6 +1,3 @@
-const UserSuite = require('./User');
-const ActivitySuite = require('./Activity');
-const PartnerSuite = require('./Partner');
-const ProductSuite = require('./Product');
-
-module.exports = { UserSuite, ActivitySuite, PartnerSuite, ProductSuite };
+const AdminSuite = require('./Admin');
+const BrandSuite = require('./Brand');
+module.exports = { AdminSuite, BrandSuite };
