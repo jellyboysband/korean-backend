@@ -1,7 +1,6 @@
 const BrandService = require('../../services/BrandService');
 
-class BrandController { 
-  
+class BrandController {
   static async list(ctx) {
     const list = await BrandService.list(ctx.QUERY);
     ctx.body = list.map(brand => {
