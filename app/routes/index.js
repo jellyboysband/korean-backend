@@ -10,6 +10,8 @@ const adminMiddleware = require('../middlewares/adminMiddleware');
 
 const router = new Router();
 
+router.prefix('/api');
+
 // set routers from documentation
 Object.keys(paths).forEach(path => {
   Object.keys(paths[path]).forEach(method => {
