@@ -38,11 +38,12 @@ module.exports = {
       );
     });
     promise.then(() => {
-      // queryInterface.sequelize.query(`
-      // create index admins_username_index
-      // on postgres.public.admins (username) where deleted = false OR deleted is null;
-      // `);
-      // // TODO: тут добавляем индексы
+      return queryInterface.sequelize.query(`CREATE UNIQUE INDEX 
+    if not exists 
+    brands_unique_name 
+    ON brands(name) 
+    WHERE deleted = false
+    `);
     });
     return promise;
   }
