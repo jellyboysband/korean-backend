@@ -20,7 +20,7 @@
     description: "Get list brand"
     tags:
     - brand
-    operationId: admin/BrandController.get
+    operationId: admin/BrandController.list
 
     responses:
       '200':  {$ref: '#/components/responses/ListBrand'}
