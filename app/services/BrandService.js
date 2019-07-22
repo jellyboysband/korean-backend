@@ -21,11 +21,9 @@ class BrandService {
 
   static async create({ name }) {
     return await db.sequelize.transaction(async transaction => {
-      await db.models.Brand.create({ name }, { transaction });
+      const brand  = await db.models.Brand.create({ name }, { transaction });
 
-      const where = {};
-      const list = await db.models.Brand.findAll({ where, transaction });
-      return list.map(BrandService.dataPresenter);
+      return BrandService.dataPresenter(brand);
     });
   }
   // eslint-disable-next-line
