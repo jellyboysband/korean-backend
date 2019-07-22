@@ -7,10 +7,20 @@ class BrandController {
     if (brand) {
       ctx.throw(STATUS_CODES.CONFLICT, 'brand with this name exists');
     }
-
-    ctx.body = await BrandService.create(ctx.BODY);
+    brand = await BrandService.create(ctx.BODY);
+    ctx.body = {
+      id: brand.id
+    };
   }
-
+  static async list(ctx) {
+    const list = await BrandService.list(ctx.QUERY);
+    ctx.body = list.map(brand => {
+      return {
+        id: brand.id,
+        name: brand.name
+      };
+    });
+  }
   static async delete(ctx) {
     const { id } = ctx.QUERY;
     const brand = await BrandService.getById(id);
@@ -18,7 +28,7 @@ class BrandController {
       ctx.throw(STATUS_CODES.CONFLICT, 'brand not found');
     }
     await BrandService.delete(id);
-    ctx.body = { id };
+    ctx.body = {};
   }
 }
 
