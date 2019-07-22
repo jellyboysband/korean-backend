@@ -12,8 +12,8 @@ class BrandController {
   }
 
   static async delete(ctx) {
-    const { id } = ctx.PARAMS;
-    const brand = await BrandService.getById(ctx.PARAMS.id);
+    const { id } = ctx.QUERY;
+    const brand = await BrandService.getById(id);
     if (!brand || brand.deleted) {
       ctx.throw(STATUS_CODES.CONFLICT, 'brand not found');
     }

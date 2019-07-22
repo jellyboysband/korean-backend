@@ -3,7 +3,9 @@ const db = require('../db');
 class BrandService {
   static async getByName(name, transaction = null, lock = null) {
     const brand = await db.models.Brand.findOne({
-      where: { name }, transaction, lock
+      where: { name },
+      transaction,
+      lock
     });
     return BrandService.dataPresenter(brand);
   }
@@ -34,6 +36,7 @@ class BrandService {
   }
 
   static async delete(id) {
+    console.log('TCL: delete -> id', id);
     return await db.sequelize.transaction(async transaction => {
       return await db.models.Brand.update({ deleted: true }, { where: { id }, transaction });
     });

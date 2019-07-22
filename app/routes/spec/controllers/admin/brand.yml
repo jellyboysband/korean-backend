@@ -35,9 +35,11 @@
       - apiKey: []
     parameters:
       - name: id
-        required: true
         in: query
-        type: integer
+        required: true
+        schema:
+          type: integer
+          minimum: 1
 
     responses: 
       default: {$ref: '#/components/responses/GenericError'}
