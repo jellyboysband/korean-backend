@@ -1,7 +1,8 @@
 'use strict';
 
 // Load environment variables from .env file
-require('dotenv').config();
+require('dotenv')
+  .config();
 // const logger = require('../logger');
 
 const env = process.env.NODE_ENV || 'development';

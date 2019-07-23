@@ -15,15 +15,17 @@ const db = {
   models: []
 };
 
-fs.readdirSync(dir).forEach(file => {
-  db.models[path.basename(file, '.js')] = sequelize.import(path.join(dir, file));
-});
+fs.readdirSync(dir)
+  .forEach(file => {
+    db.models[path.basename(file, '.js')] = sequelize.import(path.join(dir, file));
+  });
 
-Object.keys(db.models).forEach(modelName => {
-  if (db.models[modelName].associate) {
-    db.models[modelName].associate(db.models);
-  }
-});
+Object.keys(db.models)
+  .forEach(modelName => {
+    if (db.models[modelName].associate) {
+      db.models[modelName].associate(db.models);
+    }
+  });
 
 db.sequelize = sequelize;
 
