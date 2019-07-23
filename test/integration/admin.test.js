@@ -26,7 +26,6 @@ describe('Misc', () => {
   describe('GET /admins', () => {
     it('<200> should always adminList', async () => {
       const { token } = await AdminSuite.adminRegister();
-      console.log(token);
       let expectedCount = 7;
       for (let i = 1; i < expectedCount; i++) {
         await AdminSuite.createAdmin(`adm${i}`, `adm${i}`);
