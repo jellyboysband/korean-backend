@@ -1,5 +1,3 @@
-'use strict';
-
 const supertest = require('supertest');
 const app = require('../../app');
 
@@ -10,9 +8,10 @@ const db = require('../../app/db');
 
 beforeEach(async () => {
   await Promise.all(
-    Object.keys(db.models).map(model => {
-      return db.models[model].truncate({ cascade: true });
-    })
+    Object.keys(db.models)
+      .map(model => {
+        return db.models[model].truncate({ cascade: true });
+      })
   );
 });
 
@@ -27,6 +26,7 @@ describe('Misc', () => {
   describe('GET /admins', () => {
     it('<200> should always adminList', async () => {
       const { token } = await AdminSuite.adminRegister();
+      console.log(token);
       let expectedCount = 7;
       for (let i = 1; i < expectedCount; i++) {
         await AdminSuite.createAdmin(`adm${i}`, `adm${i}`);
@@ -39,7 +39,8 @@ describe('Misc', () => {
 
       const { count: actualCount } = res.body;
 
-      expect(actualCount).toEqual(expectedCount);
+      expect(actualCount)
+        .toEqual(expectedCount);
     });
   });
 });
