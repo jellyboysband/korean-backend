@@ -53,9 +53,6 @@ describe('Misc', () => {
         .set('adminCookie', token)
         .expect('Content-Type', /json/)
         .expect(200);
-
-      expect(res.status)
-        .toEqual(200);
     });
   });
 });
