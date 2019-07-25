@@ -32,7 +32,7 @@ describe('Misc', () => {
         await AdminSuite.createAdmin(`adm${i}`, `adm${i}`);
       }
       const res = await request
-        .get('/api/admins')
+        .get('/api/admin/admins')
         .set('adminCookie', token)
         .expect('Content-Type', /json/)
         .expect(200);

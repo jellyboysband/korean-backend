@@ -1,11 +1,11 @@
-/admins:
+/admin/admins:
   post:
+    security: 
+      - apiKey: [] 
     tags:
     - admin
     description: "create admin."
-    operationId: admin/AdminController.create 
-    security: 
-      - apiKey: [] 
+    operationId: admin/AdminController.create  
     requestBody:
       required: true
       content:
@@ -26,12 +26,12 @@
                 id:
                   $ref: '#/components/schemas/ID'
   get:
+    security: 
+      - apiKey: [] 
     tags:
     - admin
     description: "get admin list."
-    operationId: admin/AdminController.list  
-    security: 
-      - apiKey: [] 
+    operationId: admin/AdminController.list   
     parameters: 
       - $ref: '#/components/parameters/Limit'
       - $ref: '#/components/parameters/Offset'
@@ -39,14 +39,14 @@
 
     responses:
       '200': {$ref: '#/components/responses/ListAdmin'}
-/admins/{id}: 
+/admin/admins/{id}: 
   get:
+    security: 
+      - apiKey: [] 
     tags:
     - admin
     description: "get admin by id."
-    operationId: admin/AdminController.get
-    security: 
-      - apiKey: [] 
+    operationId: admin/AdminController.get 
     parameters:
       - $ref: '#/components/parameters/Id'
     responses:
@@ -58,12 +58,12 @@
             schema:
               $ref: '#/components/schemas/Admin'
   delete:
+    security: 
+      - apiKey: [] 
     tags:
     - admin
     description: "delete admin by id."
-    operationId: admin/AdminController.delete
-    security: 
-      - apiKey: [] 
+    operationId: admin/AdminController.delete 
     parameters:
       - $ref: '#/components/parameters/Id'
     responses:

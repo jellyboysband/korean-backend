@@ -1,6 +1,8 @@
 
-/avatar/{productID}:
+/admin/avatar/{id}:
   put:
+    security: 
+      - apiKey: [] 
     operationId: admin/AvatarController.uploadAvatarProduct
     consumes:
       - multipart/form-data
@@ -8,7 +10,7 @@
     - avatar 
     parameters:
       - in: path
-        name: productID
+        name: id
         description: Product ID.
         required: true
         type: integer

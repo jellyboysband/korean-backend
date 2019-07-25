@@ -7,7 +7,7 @@ const jwtManager = new JwtManager(adminJwtKey);
 
 class AdminMiddleware {
   static async checkToken(ctx, next) {
-    const { token } = ctx.headers;
+    const { admincookie: token } = ctx.headers;
     let id = null;
     try {
       id = jwtManager.verify(token).id;
@@ -17,7 +17,7 @@ class AdminMiddleware {
     }
     const admin = await AdminService.getById(id);
 
-    if (!admin || !admin.token.includes(token)) {
+    if (!admin || !admin.tokens.includes(token)) {
       // ctx.status = UNAUTHORIZED;
       ctx.throw(UNAUTHORIZED, 'unauthorized');
     }
