@@ -23,7 +23,7 @@ Object.keys(paths).forEach(path => {
     middlewares.push(OpenApiMiddleware(route));
     if (route.security) {
       for (const security of route.security) {
-        if (security.adminTokenSecurity) {
+        if (security.apiKey) {
           middlewares.push(adminMiddleware.checkToken);
         }
       }

@@ -1,3 +1,4 @@
 const AdminSuite = require('./Admin');
 const BrandSuite = require('./Brand');
-module.exports = { AdminSuite, BrandSuite };
+const ProductSuite = require('./Product');
+module.exports = { AdminSuite, BrandSuite, ProductSuite };

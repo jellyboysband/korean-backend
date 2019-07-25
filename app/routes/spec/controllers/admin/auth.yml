@@ -1,5 +1,6 @@
-/login:
+/admin/login:
   post:
+    
     tags:
     - auth
     description: "Auth method."
@@ -23,14 +24,14 @@
             schema:
               $ref: '#/components/schemas/AdminInfo'
 
-/profile:
+/admin/profile:
   get:
+    security: 
+      - apiKey: [] 
     description: "get admin profile"
     operationId: admin/AuthController.profile
     tags:
-    - auth
-    security: 
-      - apiKey: [] 
+    - auth 
     requestBody:
       required: true
       content:

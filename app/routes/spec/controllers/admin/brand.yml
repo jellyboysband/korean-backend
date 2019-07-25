@@ -1,11 +1,11 @@
-/brand:
+/admin/brand:
   post:
+    security: 
+      - apiKey: [] 
     description: "Create new brand"
     operationId: admin/BrandController.create
     tags:
-    - brand
-    security: 
-      - apiKey: []
+    - brand 
     requestBody:
       required: true
       content:
@@ -17,6 +17,8 @@
       default: {$ref: '#/components/responses/GenericError'}
 
   get:
+    security: 
+      - apiKey: [] 
     description: "Get list brand"
     tags:
     - brand
@@ -27,12 +29,12 @@
       default: {$ref: '#/components/responses/GenericError'}
 
   delete:
+    security: 
+      - apiKey: [] 
     description: "Delete brand"
     operationId: admin/BrandController.delete
     tags:
-    - brand
-    security: 
-      - apiKey: []
+    - brand 
     parameters:
       - name: id
         in: query

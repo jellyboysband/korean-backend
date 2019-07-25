@@ -1,5 +1,6 @@
 const db = require('../db');
 const QueryUtil = require('../utils/QueryUtil');
+const Repository = require('../repositories/ServiceRepository');
 
 class AdminService {
   static async getById(id, transaction = null, lock = null) {
@@ -8,7 +9,7 @@ class AdminService {
       transaction,
       lock
     });
-    return AdminService.dataPresenter(admin);
+    return Repository.admin(admin);
   }
 
   static async getByUsername(username, transaction = null, lock = null) {
@@ -17,7 +18,7 @@ class AdminService {
       transaction,
       lock
     });
-    const result = AdminService.dataPresenter(admin);
+    const result = Repository.admin(admin);
     if (result) {
       result.passwordHash = admin.passwordHash;
     }
@@ -31,7 +32,7 @@ class AdminService {
     const list = await db.models.Admin.findAll({ where, limit, offset, transaction, lock });
     const count = await db.models.Admin.count({ where, transaction, lock });
     return {
-      list: list.map(AdminService.dataPresenter),
+      list: list.map(Repository.admin),
       limit,
       offset,
       count
@@ -62,7 +63,7 @@ class AdminService {
   static async create({ username, passwordHash }) {
     return await db.sequelize.transaction(async transaction => {
       const admin = await db.models.Admin.create({ username, passwordHash }, { transaction });
-      return AdminService.dataPresenter(admin);
+      return Repository.admin(admin);
     });
   }
   static async login(id, tokens) {
@@ -77,18 +78,5 @@ class AdminService {
   //     await AdminService.update(user.id, { tokens }, transaction);
   //   });
   // }
-
-  static dataPresenter(entity) {
-    if (!entity) {
-      return null;
-    }
-
-    return {
-      id: entity.id,
-      username: entity.username,
-      tokens: entity.tokens,
-      deleted: entity.deleted
-    };
-  }
 }
 module.exports = AdminService;

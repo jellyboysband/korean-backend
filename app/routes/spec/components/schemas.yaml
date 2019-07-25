@@ -60,7 +60,10 @@ components:
         price:
           type: integer
         avatarUrl:
-          type: string
+          oneOf:
+            - type: string
+            - type: 'null'
+
         brand:
           $ref: '#/components/schemas/Brand'
 
@@ -92,7 +95,7 @@ components:
         - description
         - apply
         - price
-        - brandID
+        - brandId
       properties:
         name:
           type: string
@@ -104,7 +107,7 @@ components:
           type: string
         price:
           type: integer
-        brandID:
+        brandId:
           type: integer
 
     AdminInfo:

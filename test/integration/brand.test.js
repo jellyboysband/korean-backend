@@ -9,10 +9,9 @@ const db = require('../../app/db');
 
 beforeEach(async () => {
   await Promise.all(
-    Object.keys(db.models)
-      .map(model => {
-        return db.models[model].truncate({ cascade: true });
-      })
+    Object.keys(db.models).map(model => {
+      return db.models[model].truncate({ cascade: true });
+    })
   );
 });
 
@@ -21,15 +20,16 @@ afterAll(async () => {
   await app.terminate();
 });
 
-describe('Misc', () => {
+describe('Brand', () => {
   const request = supertest(server);
 
   describe('GET /brand', () => {
-    it('<200> should always return API specification in swagger format', async () => {
+    it('<200> ', async () => {
       const { token } = await AdminSuite.adminRegister();
       let expectedArrayBrand = [];
       for (let i = 1; i < 7; i++) {
         expectedArrayBrand.push(await BrandSuite.createBrand(`brand${i}`));
+        delete expectedArrayBrand[i - 1].deleted;
       }
 
       const res = await request
@@ -38,18 +38,17 @@ describe('Misc', () => {
         .expect('Content-Type', /json/)
         .expect(200);
 
-      expect(res.body)
-        .toEqual(expectedArrayBrand);
+      expect(res.body).toEqual(expectedArrayBrand);
     });
   });
 
   describe('DELETE /brand', () => {
-    it('<200> should always return API specification in swagger format', async () => {
+    it('<200> ', async () => {
       const { token } = await AdminSuite.adminRegister();
       const brand = await BrandSuite.createBrand('brand');
 
-      const res = await request
-        .delete('/api/brand?id=' + brand.id)
+      await request
+        .delete('/api/admin/brand?id=' + brand.id)
         .set('adminCookie', token)
         .expect('Content-Type', /json/)
         .expect(200);

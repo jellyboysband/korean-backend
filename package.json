@@ -28,6 +28,7 @@
     "lint:app": "eslint app",
     "lint:test": "eslint test",
     "db:migrate": "node_modules/.bin/sequelize db:migrate",
+    "db:migrate:gen": "node_modules/.bin/sequelize migration:generate --name",
     "db:migrate:undo": "node_modules/.bin/sequelize db:migrate:undo",
     "db:seed": "node_modules/.bin/sequelize db:seed",
     "db:seed:all": "node_modules/.bin/sequelize db:seed:all",

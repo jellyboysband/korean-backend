@@ -1,37 +1,30 @@
-/products:
+/admin/products:
   get: 
+    security: 
+      - apiKey: [] 
     operationId: admin/ProductController.list
     tags:
     - product 
     parameters:
-      - name: query
-        type: string
-        in: query
       - name: brand
-        type: integer
+        schema:
+          type: integer
         in: query
-      - name: limit
-        type: integer
-        minimum: 1
-        maximum: 1000
-        in: query
-        default: 1000
-      - name: offset
-        type: integer
-        in: query
-        default: 0
+        required: false
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
     responses:
       '200':  {$ref: '#/components/responses/ListProduct'}
       default: {$ref: '#/components/responses/GenericError'}
 
-/product:
+/admin/product:
   post:
+    security: 
+      - apiKey: [] 
     description: "Create new product"
     operationId: admin/ProductController.create
     tags:
-    - product
-    security: 
-      - apiKey: []  
+    - product  
     requestBody:
       required: true
       content:
@@ -39,36 +32,40 @@
           schema:
             $ref: '#/components/schemas/ProductCreate'
     responses:
-      '200': {$ref: '#/components/responses/OneProduct'}
+      '200': {$ref: '#/components/responses/AfterCreate'}
       default: {$ref: '#/components/responses/GenericError'}
 
   delete:
+    security: 
+      - apiKey: [] 
     description: "Delete product"
     operationId: admin/ProductController.delete
     tags:
-    - product
-    security: 
-      - apiKey: []
+    - product 
     parameters:
       - name: id
         required: true
         in: query
-        type: integer
-
+        schema:
+          type: integer 
     responses: 
+      '200': {$ref: '#/components/responses/AfterCreate'}
       default: {$ref: '#/components/responses/GenericError'}
 
-/product/{productID}:
+/admin/product/{id}:
   get:
+    security: 
+      - apiKey: [] 
     tags:
     - product 
     operationId: admin/ProductController.get
     parameters:
       - in: path
-        name: productID
+        name: id
         description: Track ID.
         required: true
-        type: integer
+        schema:
+          type: integer
     responses:
       '200':  {$ref: '#/components/responses/OneProduct'}
       default: {$ref: '#/components/responses/GenericError'}
