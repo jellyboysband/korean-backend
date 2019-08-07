@@ -55,6 +55,5 @@
       - $ref: '#/components/parameters/Id'
 
     responses: 
-      '200': {$ref: '#/components/responses/AfterCreate'}
       default: {$ref: '#/components/responses/GenericError'}
- 
+      '200': {$ref: '#/components/responses/EditOrCreate'}
