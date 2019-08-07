@@ -30,7 +30,7 @@
           schema:
             $ref: '#/components/schemas/ProductCreate'
     responses:
-      '200': {$ref: '#/components/responses/AfterCreate'}
+      '200': {$ref: '#/components/responses/EditOrCreate'}
       default: {$ref: '#/components/responses/GenericError'}
 
 
@@ -55,6 +55,6 @@
       - $ref: '#/components/parameters/Id'
 
     responses: 
-      '200': {$ref: '#/components/responses/AfterCreate'}
+      '200': {$ref: '#/components/responses/EditOrCreate'}
       default: {$ref: '#/components/responses/GenericError'}
  
