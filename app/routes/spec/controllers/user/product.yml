@@ -4,29 +4,25 @@
     tags:
     - product 
     parameters: 
-      - name: brand
+      - name: brandId
+        type: integer
+        in: query 
         schema:
           type: integer
-        required: false
-        in: query
       - $ref: '#/components/parameters/Limit'
-      - $ref: '#/components/parameters/Offset' 
+      - $ref: '#/components/parameters/Offset'
+      - $ref: '#/components/parameters/Order'
     responses:
       '200':  {$ref: '#/components/responses/ListProduct'}
       default: {$ref: '#/components/responses/GenericError'}
 
-/product/{id}:
+/products/{id}:
   get:
     tags:
     - product 
     operationId: user/ProductController.get
     parameters:
-      - in: path
-        name: id
-        description: Track ID.
-        required: true
-        schema:
-          type: integer
+      - $ref: '#/components/parameters/Id'
     responses:
       '200':  {$ref: '#/components/responses/OneProduct'}
       default: {$ref: '#/components/responses/GenericError'}

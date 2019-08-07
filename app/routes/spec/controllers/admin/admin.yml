@@ -66,16 +66,5 @@
     operationId: admin/AdminController.delete 
     parameters:
       - $ref: '#/components/parameters/Id'
-    responses:
-      '200':
-        x-summary: OK
-        description: OK 
-        content:
-          application/json:
-            schema:
-              type: object 
-              required:
-                - id
-              properties:
-                id:
-                  $ref: '#/components/schemas/ID'
+    responses: 
+      '200': {$ref: '#/components/responses/EditOrCreate'}

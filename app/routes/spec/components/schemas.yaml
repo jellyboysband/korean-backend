@@ -36,6 +36,16 @@ components:
           $ref: '#/components/schemas/ID'
         name:
           type: string
+    Tag:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          $ref: '#/components/schemas/ID'
+        name:
+          type: string
 
     Product:
       type: object
@@ -46,6 +56,7 @@ components:
         - apply
         - price
         - brand
+        - tag
       properties:
         id:
           $ref: '#/components/schemas/ID'
@@ -66,6 +77,8 @@ components:
 
         brand:
           $ref: '#/components/schemas/Brand'
+        tag:
+          $ref: '#/components/schemas/Tag'
 
     LoginInfo:
       type: object
@@ -79,6 +92,15 @@ components:
           $ref: '#/components/schemas/Password'
 
     BrandCreate:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+    TagCreate:
       type: object
       required:
         - name

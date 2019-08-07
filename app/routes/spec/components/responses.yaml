@@ -7,9 +7,32 @@ components:
       content:
         application/json:
           schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Brand'
+            allOf:
+              - $ref: '#/components/schemas/BasicList'
+              - type: object
+                required:
+                  - list 
+                properties:
+                  list: 
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Brand'
+    ListTag:
+      description: Getting a list of tags.
+      x-summary: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/BasicList'
+              - type: object
+                required:
+                  - list 
+                properties:
+                  list: 
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Tag'
 
     ListProduct:
       description: Receive a list of products.
@@ -17,9 +40,16 @@ components:
       content:
         application/json:
           schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Product'
+            allOf:
+              - $ref: '#/components/schemas/BasicList'
+              - type: object
+                required:
+                  - list 
+                properties:
+                  list: 
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
 
     ListAdmin:
       description: Receive a list of admins.
@@ -55,8 +85,20 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
 
-    AfterCreate: 
+    EditOrCreate: 
       description: request after create.
+      x-summary: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - id
+            properties:
+              id:
+                $ref: '#/components/schemas/ID'
+    Delete: 
+      description: request after delete.
       x-summary: OK
       content:
         application/json:

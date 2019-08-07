@@ -5,19 +5,17 @@
     operationId: admin/ProductController.list
     tags:
     - product 
-    parameters:
-      - name: brand
-        schema:
-          type: integer
-        in: query
-        required: false
+    parameters: 
       - $ref: '#/components/parameters/Limit'
       - $ref: '#/components/parameters/Offset'
+      - $ref: '#/components/parameters/Order'
+      - name: brandId 
+        in: query
+        schema:
+          type: integer
     responses:
       '200':  {$ref: '#/components/responses/ListProduct'}
-      default: {$ref: '#/components/responses/GenericError'}
-
-/admin/product:
+      default: {$ref: '#/components/responses/GenericError'} 
   post:
     security: 
       - apiKey: [] 
@@ -35,6 +33,17 @@
       '200': {$ref: '#/components/responses/AfterCreate'}
       default: {$ref: '#/components/responses/GenericError'}
 
+
+/admin/products/{id}:
+  get:
+    tags:
+    - product 
+    operationId: admin/ProductController.get
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    responses:
+      '200':  {$ref: '#/components/responses/OneProduct'}
+      default: {$ref: '#/components/responses/GenericError'}
   delete:
     security: 
       - apiKey: [] 
@@ -43,29 +52,9 @@
     tags:
     - product 
     parameters:
-      - name: id
-        required: true
-        in: query
-        schema:
-          type: integer 
+      - $ref: '#/components/parameters/Id'
+
     responses: 
       '200': {$ref: '#/components/responses/AfterCreate'}
       default: {$ref: '#/components/responses/GenericError'}
-
-/admin/product/{id}:
-  get:
-    security: 
-      - apiKey: [] 
-    tags:
-    - product 
-    operationId: admin/ProductController.get
-    parameters:
-      - in: path
-        name: id
-        description: Track ID.
-        required: true
-        schema:
-          type: integer
-    responses:
-      '200':  {$ref: '#/components/responses/OneProduct'}
-      default: {$ref: '#/components/responses/GenericError'}
+ 

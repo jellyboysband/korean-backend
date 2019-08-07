@@ -1,44 +1,42 @@
-/admin/brands: 
+/tags:
   post:
-    security: 
-      - apiKey: [] 
-    description: "Create new brand"
-    operationId: admin/BrandController.create
+    description: "Create new tag"
+    operationId: admin/TagController.create
     tags:
-    - brand 
+    - tag
+    security: 
+      - apiKey: []
     requestBody:
       required: true
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BrandCreate'  
+            $ref: '#/components/schemas/TagCreate'  
     responses:
       '200': {$ref: '#/components/responses/EditOrCreate'}
       default: {$ref: '#/components/responses/GenericError'}
 
   get:
-    security: 
-      - apiKey: [] 
-    description: "Get list brand"
+    description: "Get list tag"
     tags:
-    - brand
-    operationId: admin/BrandController.list 
+    - tag
+    operationId: admin/TagController.list 
     parameters: 
       - $ref: '#/components/parameters/Limit'
       - $ref: '#/components/parameters/Offset'
       - $ref: '#/components/parameters/Order'
     responses:
-      '200':  {$ref: '#/components/responses/ListBrand'}
+      '200':  {$ref: '#/components/responses/ListTag'}
       default: {$ref: '#/components/responses/GenericError'}
 
-/admin/brands/{id}:
+/tags/{id}:
   delete:
-    security: 
-      - apiKey: [] 
-    description: "Delete brand"
-    operationId: admin/BrandController.delete
+    description: "Delete tag"
+    operationId: admin/TagController.delete
     tags:
-    - brand 
+    - tag
+    security: 
+      - apiKey: []
     parameters:
       - $ref: '#/components/parameters/Id' 
     responses: 

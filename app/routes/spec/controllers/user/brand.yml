@@ -1,9 +1,13 @@
-/brand:
+/brands:
   get:
     description: "Get list brand"
     tags:
     - brand
     operationId: user/BrandController.list
+    parameters: 
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
+      - $ref: '#/components/parameters/Order'
 
     responses:
       '200':  {$ref: '#/components/responses/ListBrand'}
