@@ -56,7 +56,7 @@ components:
         - apply
         - price
         - brand
-        - tag
+        - tags
       properties:
         id:
           $ref: '#/components/schemas/ID'
@@ -77,8 +77,10 @@ components:
 
         brand:
           $ref: '#/components/schemas/Brand'
-        tag:
-          $ref: '#/components/schemas/Tag'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
 
     LoginInfo:
       type: object
@@ -118,6 +120,7 @@ components:
         - apply
         - price
         - brandId
+        - tags
       properties:
         name:
           type: string
@@ -131,7 +134,10 @@ components:
           type: integer
         brandId:
           type: integer
-
+        tags:
+          type: array
+          items: 
+            type: string 
     AdminInfo:
       type: object
       required:

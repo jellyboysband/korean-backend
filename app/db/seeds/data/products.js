@@ -1,5 +1,5 @@
-const create = ({ name, description, apply, price, id, avatarUrl, deleted }) => {
-  return { name, description, apply, price, id, avatarUrl, deleted };
+const create = ({ name, description, apply, price, brandId, avatarUrl, deleted }) => {
+  return { name, description, apply, price, brandId, avatarUrl, deleted };
 };
 
 const { records: brands } = require('./brands');
@@ -14,7 +14,7 @@ for (let i = 1; i <= brands.length; i++) {
         apply: `apply${i}${j}`,
         // eslint-disable-next-line no-mixed-operators
         price: i * 10 + j,
-        id: i,
+        brandId: i,
         // eslint-disable-next-line no-mixed-operators
         avatarUrl: `https://picsum.photos/id/${(i * 10 + j) % 1000}/400/400`,
         deleted: Boolean(j % 2)

@@ -51,6 +51,10 @@ module.exports = (sequelize, Sequelize) => {
   // eslint-disable-next-line
   product.associate = models => {
     models.Product.belongsTo(models.Brand, { foreignKey: 'brandId', targetKey: 'id' });
+    models.Product.belongsToMany(models.Tag, {
+      through: models.TagProduct
+    });
+
     // models.Product.hasMany(models.Tag, { foreignKey: 'id', sourceKey: 'productId' });
   };
   return product;

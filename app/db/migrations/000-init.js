@@ -37,14 +37,6 @@ module.exports = {
         queryInterface.createTable(sequelize.getTable(), sequelize.getAttributes())
       );
     });
-    promise.then(() => {
-      return queryInterface.sequelize.query(`CREATE UNIQUE INDEX 
-    if not exists 
-    brands_unique_name 
-    ON brands(name) 
-    WHERE deleted = false
-    `);
-    });
     return promise;
   }
 };

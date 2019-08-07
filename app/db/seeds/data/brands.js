@@ -3,7 +3,7 @@ const create = name => {
 };
 
 const records = [];
-for (let i = 1; i <= 20; i++) {
+for (let i = 1; i <= 5; i++) {
   records.push(create(`brand${i}`));
 }
 
