@@ -13,22 +13,27 @@ class TagController {
     };
   }
   static async list(ctx) {
-    const list = await TagService.list(ctx.QUERY);
-    ctx.body = list.map(tag => {
-      return {
-        id: tag.id,
-        name: tag.name
-      };
-    });
+    const { list, count, limit, offset } = await TagService.list(ctx.QUERY);
+    ctx.body = {
+      list: list.map(tag => {
+        return {
+          id: tag.id,
+          name: tag.name
+        };
+      }),
+      count,
+      limit,
+      offset
+    };
   }
   static async delete(ctx) {
-    const { id } = ctx.QUERY;
+    const { id } = ctx.PARAMS;
     const tag = await TagService.getById(id);
     if (!tag || tag.deleted) {
-      ctx.throw(STATUS_CODES.CONFLICT, 'tag not found');
+      ctx.throw(STATUS_CODES.NOT_FOUND, 'tag not found');
     }
     await TagService.delete(id);
-    ctx.body = {};
+    ctx.body = { id };
   }
 }
 

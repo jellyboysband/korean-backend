@@ -109,7 +109,8 @@ module.exports = route => async (ctx, next) => {
               logger.error(ajv.errors, 'ajv ctx.body', JSON.stringify(ctx, true, ' '));
               ctx.status = 400;
               ctx.body = {
-                errors: ajv.errors
+                errors: ajv.errors,
+                actual: ctx.body
               };
               return;
             }

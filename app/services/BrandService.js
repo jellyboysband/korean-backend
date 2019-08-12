@@ -1,4 +1,5 @@
 const db = require('../db');
+const QueryUtil = require('../utils/QueryUtil');
 const Repository = require('../repositories/ServiceRepository');
 
 class BrandService {
@@ -29,9 +30,16 @@ class BrandService {
   }
   // eslint-disable-next-line
   static async list({ limit, offset, order, ...filter }, transaction = null, lock = null) {
+    order = QueryUtil.generateOrder(order, Object.keys(db.models.Brand.rawAttributes));
     const where = {};
     const list = await db.models.Brand.findAll({ where, limit, offset, transaction, lock });
-    return list.map(Repository.brand);
+    const count = await db.models.Admin.count({ where, transaction, lock });
+    return {
+      list: list.map(Repository.brand),
+      limit,
+      offset,
+      count
+    };
   }
 
   static async delete(id) {
