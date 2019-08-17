@@ -57,4 +57,36 @@
     responses: 
       '200': {$ref: '#/components/responses/EditOrCreate'}
       default: {$ref: '#/components/responses/GenericError'}
- 
+
+/admin/products/{id}/images:
+  put:
+    x-role: admin
+    tags:
+    - product
+    summary: add product image
+    security:
+      - apiKey: [] 
+    operationId: admin/ProductController.image
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema: 
+            type: object
+            required:
+              - file
+            properties:
+              file:  
+                type: binary
+  delete:
+    x-role: admin
+    tags:
+    - product
+    summary: rm product image
+    security:
+      - apiKey: [] 
+    operationId: admin/ProductController.deleteImage
+    parameters:
+      - $ref: '#/components/parameters/Id'

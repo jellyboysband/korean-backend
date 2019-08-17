@@ -6,6 +6,7 @@ module.exports = (sequelize, Sequelize) => {
       tagId: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        unique: false,
         primaryKey: true
       },
       productId: {

@@ -3,6 +3,8 @@
 module.exports = {
   up: (queryInterface, _) => {
     return queryInterface.sequelize.query(` 
+    alter table "tagProduct" drop constraint "tagProduct_pkey";
+    
     alter table "tagProduct"
     add constraint "tagProduct_tags_id_fk"
       foreign key ("tagId") references tags;

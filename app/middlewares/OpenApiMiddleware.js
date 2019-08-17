@@ -65,7 +65,11 @@ module.exports = route => async (ctx, next) => {
     ctx.PARAMS = data.path;
   }
 
-  if (typeof route.requestBody !== 'undefined') {
+  if (
+    typeof route.requestBody !== 'undefined' &&
+    route.requestBody.content &&
+    route.requestBody.content['application/json']
+  ) {
     const schema = route.requestBody.content['application/json'].schema;
 
     const ajv = new Ajv({
