@@ -23,7 +23,7 @@ class ProductService {
     return Repository.product(product);
   }
 
-  static async create({ name, description, apply, price, brandId, tags }) {
+  static async create({ name, description, apply, price, brandId, tags = [] }) {
     return await db.sequelize.transaction(async transaction => {
       const product = await db.models.Product.create(
         { name, description, apply, price, brandId },
