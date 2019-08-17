@@ -1,11 +1,10 @@
 const TagService = require('../../services/TagService');
-const STATUS_CODES = require('../../constants/statusCodes');
 
 class TagController {
   static async create(ctx) {
     let tag = await TagService.getByName(ctx.BODY.name);
     if (tag) {
-      ctx.throw(STATUS_CODES.CONFLICT, 'tag with this name exists');
+      ctx.throw(ctx.STATUS_CODES.CONFLICT, 'tag with this name exists');
     }
     tag = await TagService.create(ctx.BODY);
     ctx.body = {
@@ -30,7 +29,7 @@ class TagController {
     const { id } = ctx.PARAMS;
     const tag = await TagService.getById(id);
     if (!tag || tag.deleted) {
-      ctx.throw(STATUS_CODES.NOT_FOUND, 'tag not found');
+      ctx.throw(ctx.STATUS_CODES.NOT_FOUND, 'tag not found');
     }
     await TagService.delete(id);
     ctx.body = { id };

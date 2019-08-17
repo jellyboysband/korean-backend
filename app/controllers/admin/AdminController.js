@@ -1,7 +1,6 @@
 const AdminService = require('../../services/AdminService');
 
 const { adminSalt } = require('../../config');
-const STATUS_CODES = require('../../constants/statusCodes');
 
 const PasswordManager = require('../../utils/PasswordManager');
 const passwordManager = new PasswordManager(adminSalt);
@@ -10,7 +9,7 @@ class AdminController {
   static async get(ctx) {
     const admin = await AdminService.getById(ctx.PARAMS.id);
     if (!admin) {
-      ctx.throw(STATUS_CODES.NOT_FOUND, 'admin not found');
+      ctx.throw(ctx.STATUS_CODES.NOT_FOUND, 'admin not found');
     }
     ctx.body = {
       id: admin.id,
@@ -35,7 +34,7 @@ class AdminController {
     const { id } = ctx.PARAMS;
     const admin = await AdminService.getById(ctx.PARAMS.id);
     if (!admin || admin.deleted) {
-      ctx.throw(STATUS_CODES.NOT_FOUND, 'admin not found');
+      ctx.throw(ctx.STATUS_CODES.NOT_FOUND, 'admin not found');
     }
     await AdminService.delete(id);
     ctx.body = { id };
@@ -43,7 +42,7 @@ class AdminController {
   static async create(ctx) {
     let admin = await AdminService.getByUsername(ctx.BODY.username);
     if (admin) {
-      ctx.throw(STATUS_CODES.CONFLICT, 'admin with this login exists');
+      ctx.throw(ctx.STATUS_CODES.CONFLICT, 'admin with this login exists');
     }
     ctx.BODY.passwordHash = passwordManager.hash(ctx.BODY.password);
 
@@ -56,12 +55,12 @@ class AdminController {
   //   const { id } = ctx.PARAMS;
   //   const admin = await AdminService.getById(id);
   //   if (!admin) {
-  //     ctx.throw(STATUS_CODES.NOT_FOUND, 'admin not found');
+  //     ctx.throw(ctx.STATUS_CODES.NOT_FOUND, 'admin not found');
   //   }
   //   if (ctx.BODY.login) {
   //     const admin = await AdminService.getByLogin(ctx.BODY.login);
   //     if (admin && admin.id !== id) {
-  //       ctx.throw(STATUS_CODES.CONFLICT, 'admin with this login exists');
+  //       ctx.throw(ctx.STATUS_CODES.CONFLICT, 'admin with this login exists');
   //     }
   //   }
   //   await AdminService.edit(id, ctx.BODY);

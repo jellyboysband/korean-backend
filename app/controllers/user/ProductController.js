@@ -1,10 +1,10 @@
 const ProductService = require('../../services/ProductService');
-const STATUS_CODES = require('../../constants/statusCodes');
+
 class ProductController {
   static async get(ctx) {
     const product = await ProductService.getById(ctx.PARAMS.id);
     if (!product) {
-      ctx.throw(STATUS_CODES.NOT_FOUND, 'not found');
+      ctx.throw(ctx.STATUS_CODES.NOT_FOUND, 'not found');
     }
     ctx.body = {
       id: product.id,
