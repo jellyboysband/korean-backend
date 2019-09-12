@@ -54,7 +54,7 @@
     parameters:
       - $ref: '#/components/parameters/Id'
 
-    responses: 
+    responses:  
       '200': {$ref: '#/components/responses/EditOrCreate'}
       default: {$ref: '#/components/responses/GenericError'}
 
@@ -89,4 +89,4 @@
       - apiKey: [] 
     operationId: admin/ProductController.deleteImage
     parameters:
-      - $ref: '#/components/parameters/Id'
+      - $ref: '#/components/parameters/Id' 
