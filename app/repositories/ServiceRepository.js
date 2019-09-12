@@ -22,11 +22,11 @@ class ServiceRepository {
       deleted: entity.deleted
     };
   }
-
   static tag(entity) {
     if (!entity) {
       return null;
     }
+
     return {
       id: entity.id,
       name: entity.name,

@@ -1,4 +1,4 @@
-/tags:
+/admin/tags:
   post:
     description: "Create new tag"
     operationId: admin/TagController.create
@@ -20,6 +20,8 @@
     description: "Get list tag"
     tags:
     - tag
+    security: 
+      - apiKey: []
     operationId: admin/TagController.list 
     parameters: 
       - $ref: '#/components/parameters/Limit'
@@ -29,7 +31,7 @@
       '200':  {$ref: '#/components/responses/ListTag'}
       default: {$ref: '#/components/responses/GenericError'}
 
-/tags/{id}:
+/admin/tags/{id}:
   delete:
     description: "Delete tag"
     operationId: admin/TagController.delete

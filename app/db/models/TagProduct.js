@@ -5,7 +5,9 @@ module.exports = (sequelize, Sequelize) => {
     {
       tagId: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        unique: false,
+        primaryKey: true
       },
       productId: {
         allowNull: false,
@@ -13,7 +15,8 @@ module.exports = (sequelize, Sequelize) => {
       }
     },
     {
-      timestamps: false
+      timestamps: false,
+      freezeTableName: true
     }
   );
   // eslint-disable-next-line

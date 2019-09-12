@@ -2,40 +2,44 @@ const db = require('../db');
 const QueryUtil = require('../utils/QueryUtil');
 const Repository = require('../repositories/ServiceRepository');
 
-class BrandService {
+class TagService {
   static async getByName(name, transaction = null, lock = null) {
-    const brand = await db.models.Brand.findOne({
+    const tag = await db.models.Tag.findOne({
       where: { name },
       transaction,
       lock
     });
-    return Repository.brand(brand);
+    return Repository.tag(tag);
   }
 
   static async getById(id, transaction = null, lock = null) {
-    const brand = await db.models.Brand.scope(null).findOne({
+    const tag = await db.models.Tag.scope(null).findOne({
       where: { id },
       transaction,
       lock
     });
-    return Repository.brand(brand);
+    return Repository.tag(tag);
   }
 
   static async create({ name }) {
     return await db.sequelize.transaction(async transaction => {
-      const brand = await db.models.Brand.create({ name }, { transaction });
+      const tag = await db.models.Tag.create({ name }, { transaction });
 
-      return Repository.brand(brand);
+      return Repository.tag(tag);
     });
+  }
+
+  static async createRefs(refs, transaction = null) {
+    return await db.models.TagProduct.bulkCreate(refs, { transaction });
   }
   // eslint-disable-next-line
   static async list({ limit, offset, order, ...filter }, transaction = null, lock = null) {
-    order = QueryUtil.generateOrder(order, Object.keys(db.models.Brand.rawAttributes));
+    order = QueryUtil.generateOrder(order, Object.keys(db.models.Admin.rawAttributes));
     const where = {};
-    const list = await db.models.Brand.findAll({ where, limit, offset, transaction, lock });
+    const list = await db.models.Tag.findAll({ where, limit, offset, transaction, lock });
     const count = await db.models.Admin.count({ where, transaction, lock });
     return {
-      list: list.map(Repository.brand),
+      list: list.map(Repository.tag),
       limit,
       offset,
       count
@@ -44,9 +48,9 @@ class BrandService {
 
   static async delete(id) {
     return await db.sequelize.transaction(async transaction => {
-      return await db.models.Brand.update({ deleted: true }, { where: { id }, transaction });
+      return await db.models.Tag.update({ deleted: true }, { where: { id }, transaction });
     });
   }
 }
 
-module.exports = BrandService;
+module.exports = TagService;

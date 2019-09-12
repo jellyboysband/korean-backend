@@ -1,7 +1,6 @@
 const AdminService = require('../../services/AdminService');
 
 const { adminSalt, adminJwtKey } = require('../../config');
-const STATUS_CODES = require('../../constants/statusCodes');
 
 const PasswordManager = require('../../utils/PasswordManager');
 const passwordManager = new PasswordManager(adminSalt);
@@ -13,11 +12,11 @@ class AuthController {
     const { username, password } = ctx.BODY;
     const admin = await AdminService.getByUsername(username);
     if (!admin) {
-      ctx.throw(STATUS_CODES.NOT_FOUND, 'admin not found');
+      ctx.throw(ctx.STATUS_CODES.NOT_FOUND, 'admin not found');
     }
     const passwordHash = passwordManager.hash(password);
     if (passwordHash !== admin.passwordHash) {
-      ctx.throw(STATUS_CODES.FORBIDDEN, 'incorrect password');
+      ctx.throw(ctx.STATUS_CODES.FORBIDDEN, 'incorrect password');
     }
 
     const token = jwtManager.getToken(admin.id);
@@ -32,7 +31,7 @@ class AuthController {
   static async logout(ctx) {
     const { token } = ctx.headers;
     await AdminService.logout(ctx.state.admin.id, token);
-    ctx.status = STATUS_CODES.OK;
+    ctx.status = ctx.STATUS_CODES.OK;
   }
   static async profile(ctx) {
     const { admin } = ctx.state;

@@ -21,6 +21,8 @@ class AdminMiddleware {
       // ctx.status = UNAUTHORIZED;
       ctx.throw(UNAUTHORIZED, 'unauthorized');
     }
+
+    // const admin = await AdminService.getById(1);
     ctx.state.admin = admin;
     await next();
   }
