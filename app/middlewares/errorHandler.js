@@ -1,6 +1,5 @@
 'use strict';
 
-const { NOT_FOUND } = require('../constants/statusCodes');
 const { UNKNOWN_ENDPOINT } = require('../constants/error');
 
 const parseIfValid = obj => {
@@ -24,7 +23,7 @@ function errorHandler() {
 
       // Respond 404 Not Found for unhandled request
       if (!ctx.body && (!ctx.status || ctx.status === 404)) {
-        ctx.status = NOT_FOUND;
+        ctx.status = 404;
         ctx.body = UNKNOWN_ENDPOINT;
       }
     } catch (err) {

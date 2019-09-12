@@ -1,5 +1,5 @@
 const AdminService = require('../services/AdminService');
-const { UNAUTHORIZED } = require('../constants/statusCodes');
+
 const { adminJwtKey } = require('../config');
 
 const JwtManager = require('../utils/JwtManager');
@@ -13,13 +13,13 @@ class AdminMiddleware {
       id = jwtManager.verify(token).id;
     } catch (err) {
       // ctx.status = UNAUTHORIZED;
-      ctx.throw(UNAUTHORIZED, 'unauthorized');
+      ctx.throw (ctx.STATUS_CODES.UNAUTHORIZED, 'unauthorized');
     }
     const admin = await AdminService.getById(id);
 
     if (!admin || !admin.tokens.includes(token)) {
       // ctx.status = UNAUTHORIZED;
-      ctx.throw(UNAUTHORIZED, 'unauthorized');
+      ctx.throw(ctx.STATUS_CODES.UNAUTHORIZED, 'unauthorized');
     }
 
     // const admin = await AdminService.getById(1);

@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 /admin/brands: 
-=======
-/brands:
->>>>>>> refactor ymls
+
   post:
     security: 
       - apiKey: [] 
