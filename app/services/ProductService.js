@@ -61,11 +61,15 @@ class ProductService {
     if (typeof filter.brandId !== 'undefined') {
       where.brandId = filter.brandId;
     }
+    if (typeof filter.id !== 'undefined') {
+      where.id = filter.id;
+    }
     let whereTag = null;
     if (typeof filter.tags !== 'undefined') {
       whereTag = {};
       whereTag.id = filter.tags;
     }
+
     const list = await db.models.Product.findAll({
       where,
       include: [

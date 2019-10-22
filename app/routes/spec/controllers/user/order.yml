@@ -1,0 +1,70 @@
+/order:
+  get:
+    operationId: user/OrderController.getByPhone
+    tags:
+      - orders
+    parameters:
+      - name: phone
+        in: query
+        required: true
+        schema:
+          type: string
+    responses:
+      # '200':  {$ref: '#/components/responses/orders'}
+      default: { $ref: "#/components/responses/GenericError" }
+  post:
+    tags:
+      - orders
+    operationId: user/OrderController.create
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - phone
+              - list
+            properties:
+              phone:
+                type: string
+              list:
+                type: array
+                minItems: 1
+                items:
+                  type: object
+                  required:
+                    - productId
+                    - count
+                  properties:
+                    productId:
+                      $ref: "#/components/schemas/ID"
+                    count:
+                      minimum: 1
+                      type: integer
+
+    responses:
+      "200":
+        x-summary: OK
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  $ref: "#/components/schemas/ID"
+      default: { $ref: "#/components/responses/GenericError" }
+
+/order/{id}:
+  get:
+    operationId: user/OrderController.getById
+    tags:
+      - orders
+    parameters:
+      - $ref: "#/components/parameters/Id"
+    responses:
+      # '200':  {$ref: '#/components/responses/orders'}
+      default: { $ref: "#/components/responses/GenericError" }

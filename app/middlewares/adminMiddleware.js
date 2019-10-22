@@ -13,7 +13,7 @@ class AdminMiddleware {
       id = jwtManager.verify(token).id;
     } catch (err) {
       // ctx.status = UNAUTHORIZED;
-      ctx.throw (ctx.STATUS_CODES.UNAUTHORIZED, 'unauthorized');
+      ctx.throw(ctx.STATUS_CODES.UNAUTHORIZED, 'unauthorized');
     }
     const admin = await AdminService.getById(id);
 

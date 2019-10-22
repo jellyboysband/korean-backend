@@ -34,6 +34,20 @@ class ServiceRepository {
     };
   }
 
+  static order(entity) {
+    if (!entity) {
+      return null;
+    }
+
+    return {
+      id: entity.id,
+      name: entity.phone,
+      data: entity.data,
+      createdAt: entity.createdAt,
+      cost: entity.cost,
+      status: entity.status
+    };
+  }
   static product(entity) {
     if (!entity) {
       return null;
