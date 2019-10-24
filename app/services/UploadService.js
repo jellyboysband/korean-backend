@@ -8,6 +8,7 @@ class UploadService {
     switch (file.type) {
       case 'image/jpeg':
       case 'image/png':
+      case 'image/gif':
         destDir = process.env.IMAGE_PATH;
         break;
       default:
@@ -26,10 +27,11 @@ class UploadService {
       .basename(file.path)
       .split('_')
       .pop()}`;
-    if (!fs.existsSync(path.join(fullPath, filename))) {
+    if (fs.existsSync(path.join(fullPath, filename))) {
       filename = Date.now().toString() + filename;
     }
     let dest = fs.createWriteStream(path.join(fullPath, filename));
+
     source.pipe(dest);
     const res = await streamPromise(source);
 
@@ -37,11 +39,12 @@ class UploadService {
     if (res === 'error') {
       throw new Error('image was not saved');
     }
+
     return path.join(destDir, filename);
   }
 
   static removeFile(fileName) {
-    const filePath = path.join(process.env.STATIC_PATH, fileName);
+    const filePath = path.join(process.env.FRONT_PATH, fileName);
     try {
       fs.unlinkSync(filePath);
     } catch (err) {

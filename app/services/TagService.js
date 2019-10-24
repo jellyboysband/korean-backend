@@ -32,6 +32,9 @@ class TagService {
   static async createRefs(refs, transaction = null) {
     return await db.models.TagProduct.bulkCreate(refs, { transaction });
   }
+  static async deleteRefs(where, transaction = null) {
+    return await db.models.TagProduct.destroy({ where, transaction });
+  }
   // eslint-disable-next-line
   static async list({ limit, offset, order, ...filter }, transaction = null, lock = null) {
     order = QueryUtil.generateOrder(order, Object.keys(db.models.Admin.rawAttributes));

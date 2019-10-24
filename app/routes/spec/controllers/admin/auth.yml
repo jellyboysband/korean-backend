@@ -1,18 +1,17 @@
 /admin/login:
   post:
-    
     tags:
-    - auth
+      - auth
     description: "Auth method."
-    operationId: admin/AuthController.login 
+    operationId: admin/AuthController.login
     requestBody:
       required: true
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/LoginInfo' 
+            $ref: "#/components/schemas/LoginInfo"
     responses:
-      '200':
+      "200":
         x-summary: OK
         description: OK
         headers:
@@ -22,27 +21,29 @@
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AdminInfo'
+              $ref: "#/components/schemas/AdminInfo"
 
 /admin/profile:
   get:
-    security: 
-      - apiKey: [] 
+    security:
+      - apiKey: []
     description: "get admin profile"
     operationId: admin/AuthController.profile
     tags:
-    - auth 
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/LoginInfo'
+      - auth
     responses:
-      '200':
-        description: OK 
+      "200":
+        description: OK
         x-summary: OK
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AdminInfo'
+              type: object
+              required:
+                - username
+                - id
+              properties:
+                id:
+                  $ref: "#/components/schemas/ID"
+                username:
+                  $ref: "#/components/schemas/Username"

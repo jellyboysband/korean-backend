@@ -37,7 +37,7 @@ class AuthController {
     const { admin } = ctx.state;
     ctx.body = {
       id: admin.id,
-      login: admin.login
+      username: admin.username
     };
   }
 }

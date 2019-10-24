@@ -40,12 +40,34 @@ class ProductService {
       return Repository.product(product);
     });
   }
-  static async edit({ name, description, apply, price, brandId }) {
+  static async edit(id, { name, description, apply, price, brandId, tags = [] }) {
     return await db.sequelize.transaction(async transaction => {
-      const product = await db.models.Product.update(
-        { name, description, apply, price, brandId },
-        { transaction }
-      );
+      const data = {};
+      if (typeof name !== 'undefined') {
+        data.name = name;
+      }
+      if (typeof description !== 'undefined') {
+        data.description = description;
+      }
+      if (typeof apply !== 'undefined') {
+        data.apply = apply;
+      }
+      if (typeof price !== 'undefined') {
+        data.price = price;
+      }
+      if (typeof brandId !== 'undefined') {
+        data.brandId = brandId;
+      }
+      const product = await ProductService.update(id, data, transaction);
+      if (tags.length) {
+        await TagService.deleteRefs({ productId: id }, transaction);
+        await TagService.createRefs(
+          tags.map(it => {
+            return { tagId: it, productId: id };
+          }),
+          transaction
+        );
+      }
       return Repository.product(product);
     });
   }
