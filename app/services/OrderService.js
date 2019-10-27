@@ -1,6 +1,7 @@
 const db = require('../db');
 const QueryUtil = require('../utils/QueryUtil');
 const Repository = require('../repositories/ServiceRepository');
+const ProductService = require('./ProductService');
 
 class OrderService {
   static async getById(id, transaction = null, lock = null) {
@@ -31,12 +32,44 @@ class OrderService {
       return Repository.order(order);
     });
   }
+
+
+  static async edit(id, { status, resolvedProducts = [] }) {
+    return await db.sequelize.transaction(async transaction => {
+      await OrderService.getById(id, transaction, transaction.LOCK.UPDATE);
+
+      const { list: products } = await ProductService.list({ id: resolvedProducts.map(it => it.productId) }, transaction);
+      let cost = 0;
+      const newData = [];
+      resolvedProducts.forEach(it => {
+        const product = products.find(p => p.id === it.productId);
+        product.price = it.price;
+        const price = product.price * it.count;
+        cost += price;
+        newData.push({ cost: price, count: it.count, product });
+      });
+
+
+      return await OrderService.update(id, { status, cost, data: newData }, transaction);
+    });
+  }
+  static async update(id, data, transaction = null) {
+    return await db.models.Order.update(data, { where: { id }, transaction });
+  }
   // eslint-disable-next-line
   static async list({ limit, offset, order, ...filter }, transaction = null, lock = null) {
     order = QueryUtil.generateOrder(order, Object.keys(db.models.Order.rawAttributes));
     const where = {};
+    if (typeof filter.status !== 'undefined') {
+      where.status = filter.status;
+    }
+    if (typeof filter.phone !== 'undefined') {
+      where.phone = {
+        [db.Op.like]: '%filter.phone%'
+      };
+    }
     const list = await db.models.Order.findAll({ where, limit, offset, transaction, lock });
-    const count = await db.models.Admin.count({ where, transaction, lock });
+    const count = await db.models.Admin.count({ where, transaction });
     return {
       list: list.map(Repository.order),
       limit,

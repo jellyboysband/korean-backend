@@ -6,6 +6,11 @@ class ProductController {
     const { id } = await ProductService.create(ctx.BODY);
     ctx.body = { id };
   }
+  static async edit(ctx) {
+    const { id } = ctx.params;
+    await ProductService.edit(id, ctx.BODY);
+    ctx.body = { id };
+  }
   static async delete(ctx) {
     await ProductService.delete(ctx.PARAMS.id);
     ctx.body = { id: ctx.PARAMS.id };

@@ -41,7 +41,7 @@ class ServiceRepository {
 
     return {
       id: entity.id,
-      name: entity.phone,
+      phone: entity.phone,
       data: entity.data,
       createdAt: entity.createdAt,
       cost: entity.cost,

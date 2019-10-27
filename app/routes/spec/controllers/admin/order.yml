@@ -1,0 +1,109 @@
+/admin/orders:
+  get:
+    security:
+      - apiKey: []
+    operationId: admin/OrderController.list
+    tags:
+      - orders
+    parameters:
+      - $ref: "#/components/parameters/Limit"
+      - $ref: "#/components/parameters/Offset"
+      - $ref: "#/components/parameters/Order"
+      - name: brandId
+        in: query
+        schema:
+          type: integer
+      - name: phone
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
+    responses:
+      # '200':  {$ref: '#/components/responses/orders'}
+      default: { $ref: "#/components/responses/GenericError" }
+
+/admin/orders/{id}:
+  get:
+    security:
+      - apiKey: []
+    operationId: admin/OrderController.getById
+    tags:
+      - orders
+    parameters:
+      - $ref: "#/components/parameters/Id"
+    responses:
+      # '200':  {$ref: '#/components/responses/orders'}
+      default: { $ref: "#/components/responses/GenericError" }
+  put:
+    security:
+      - apiKey: []
+    description: "Create new product"
+    operationId: admin/OrderController.edit
+    parameters:
+      - $ref: "#/components/parameters/Id"
+    tags:
+      - product
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            required:
+              - resolvedProducts
+              - status
+            properties:
+              status:
+                type: string
+                minLength: 1
+                maxLength: 100
+              resolvedProducts:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - productId
+                    - price
+                    - count
+                  properties:
+                    productId:
+                      $ref: "#/components/schemas/ID"
+                    count:
+                      minimum: 1
+                      type: integer
+                    price:
+                      minimum: 0
+                      type: integer
+    responses:
+      "200": { $ref: "#/components/responses/EditOrCreate" }
+      default: { $ref: "#/components/responses/GenericError" }
+
+/admin/orders/{id}/status:
+  put:
+    security:
+      - apiKey: []
+    description: "setStatus"
+    operationId: admin/OrderController.setStatus
+    parameters:
+      - $ref: "#/components/parameters/Id"
+    tags:
+      - product
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            required:
+              - status
+            properties:
+              status:
+                type: string
+                minLength: 1
+                maxLength: 100
+    responses:
+      "200": { $ref: "#/components/responses/EditOrCreate" }
+      default: { $ref: "#/components/responses/GenericError" }

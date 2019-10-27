@@ -1,92 +1,126 @@
 /admin/products:
-  get: 
-    security: 
-      - apiKey: [] 
+  get:
+    security:
+      - apiKey: []
     operationId: admin/ProductController.list
     tags:
-    - product 
-    parameters: 
-      - $ref: '#/components/parameters/Limit'
-      - $ref: '#/components/parameters/Offset'
-      - $ref: '#/components/parameters/Order'
-      - name: brandId 
+      - product
+    parameters:
+      - $ref: "#/components/parameters/Limit"
+      - $ref: "#/components/parameters/Offset"
+      - $ref: "#/components/parameters/Order"
+      - name: brandId
         in: query
         schema:
           type: integer
     responses:
-      '200':  {$ref: '#/components/responses/ListProduct'}
-      default: {$ref: '#/components/responses/GenericError'} 
+      "200": { $ref: "#/components/responses/ListProduct" }
+      default: { $ref: "#/components/responses/GenericError" }
   post:
-    security: 
-      - apiKey: [] 
+    security:
+      - apiKey: []
     description: "Create new product"
     operationId: admin/ProductController.create
     tags:
-    - product  
+      - product
     requestBody:
       required: true
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ProductCreate'
+            $ref: "#/components/schemas/ProductCreate"
     responses:
-      '200': {$ref: '#/components/responses/EditOrCreate'}
-      default: {$ref: '#/components/responses/GenericError'}
-
+      "200": { $ref: "#/components/responses/EditOrCreate" }
+      default: { $ref: "#/components/responses/GenericError" }
 
 /admin/products/{id}:
   get:
     tags:
-    - product 
+      - product
     operationId: admin/ProductController.get
     parameters:
-      - $ref: '#/components/parameters/Id'
+      - $ref: "#/components/parameters/Id"
     responses:
-      '200':  {$ref: '#/components/responses/OneProduct'}
-      default: {$ref: '#/components/responses/GenericError'}
+      "200": { $ref: "#/components/responses/OneProduct" }
+      default: { $ref: "#/components/responses/GenericError" }
   delete:
-    security: 
-      - apiKey: [] 
+    security:
+      - apiKey: []
     description: "Delete product"
     operationId: admin/ProductController.delete
     tags:
-    - product 
+      - product
     parameters:
-      - $ref: '#/components/parameters/Id'
+      - $ref: "#/components/parameters/Id"
 
-    responses:  
-      '200': {$ref: '#/components/responses/EditOrCreate'}
-      default: {$ref: '#/components/responses/GenericError'}
+    responses:
+      "200": { $ref: "#/components/responses/EditOrCreate" }
+      default: { $ref: "#/components/responses/GenericError" }
+
+  put:
+    security:
+      - apiKey: []
+    description: "Create new product"
+    operationId: admin/ProductController.edit
+    parameters:
+      - $ref: "#/components/parameters/Id"
+    tags:
+      - product
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            properties:
+              name:
+                type: string
+                minLength: 1
+                maxLength: 100
+              description:
+                type: string
+              apply:
+                type: string
+              price:
+                type: integer
+              brandId:
+                type: integer
+              tags:
+                type: array
+                items: 
+                  type: integer 
+    responses:
+      "200": { $ref: "#/components/responses/EditOrCreate" }
+      default: { $ref: "#/components/responses/GenericError" }
 
 /admin/products/{id}/images:
   put:
     x-role: admin
     tags:
-    - product
+      - product
     summary: add product image
     security:
-      - apiKey: [] 
+      - apiKey: []
     operationId: admin/ProductController.image
     parameters:
-      - $ref: '#/components/parameters/Id'
+      - $ref: "#/components/parameters/Id"
     requestBody:
       required: true
       content:
         multipart/form-data:
-          schema: 
+          schema:
             type: object
             required:
               - file
             properties:
-              file:  
+              file:
                 type: binary
   delete:
     x-role: admin
     tags:
-    - product
+      - product
     summary: rm product image
     security:
-      - apiKey: [] 
+      - apiKey: []
     operationId: admin/ProductController.deleteImage
     parameters:
-      - $ref: '#/components/parameters/Id' 
+      - $ref: "#/components/parameters/Id"
