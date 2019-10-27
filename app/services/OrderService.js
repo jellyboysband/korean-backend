@@ -49,7 +49,7 @@ class OrderService {
         product.price = it.price;
         const price = product.price * it.count;
         cost += price;
-        newData.push({ cost: price, count: it.count, product });
+        newData.push({ cost: price, count: it.count, product: product.product });
       });
 
 
