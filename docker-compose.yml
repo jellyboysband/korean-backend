@@ -1,0 +1,49 @@
+version: "3.7"
+
+services:
+  korean-db:
+    container_name: korean-db
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+
+  korean-backend:
+    container_name: korean-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: korean-backend
+    restart: always
+    ports:
+      - 8080:8080
+    environment:
+      # General
+      NODE_ENV: production
+      APP_NAME: korean-backend
+      APP_HOST: localhost
+      APP_PORT: "8080"
+      LOG_ENABLED: "true"
+      LOG_LEVEL: production
+
+      ADMIN_SALT: ""
+      ADMIN_JWT_KEY: ""
+      USER_SALT: ""
+      USER_JWT_KEY: ""
+      # # DB
+      DB_HOST: "localhost"
+      DB_PORT: "5432"
+      DB_DIALECT: "postgres"
+      DB_POOL_MAX: "50"
+      DB_POOL_MIN: "20"
+      DB_NAME: "postgres"
+      DB_USER: "postgres"
+      DB_PASSWORD: "postgres"
+      DB_LOGGING:
+
+      STATIC_PATH: "/home/exorcist/Documents/korean"
+      IMAGE_PATH: "images"
