@@ -36,13 +36,16 @@ class OrderService {
 
   static async edit(id, { status, resolvedProducts = [] }) {
     return await db.sequelize.transaction(async transaction => {
-      await OrderService.getById(id, transaction, transaction.LOCK.UPDATE);
+      const order = await OrderService.getById(id, transaction, transaction.LOCK.UPDATE);
 
       const { list: products } = await ProductService.list({ id: resolvedProducts.map(it => it.productId) }, transaction);
       let cost = 0;
       const newData = [];
       resolvedProducts.forEach(it => {
-        const product = products.find(p => p.id === it.productId);
+        let product = products.find(p => p.id === it.productId);
+        if (!product) {
+          product = order.data.find(p => p.product.id === it.productId);
+        }
         product.price = it.price;
         const price = product.price * it.count;
         cost += price;
@@ -69,6 +72,7 @@ class OrderService {
       };
     }
     const list = await db.models.Order.findAll({ where, limit, offset, transaction, lock });
+    // const products = await ProductService.list({id:list.data.product.id},transaction);
     const count = await db.models.Admin.count({ where, transaction });
     return {
       list: list.map(Repository.order),
