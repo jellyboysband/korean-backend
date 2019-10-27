@@ -7,7 +7,7 @@ module.exports = {
     return queryInterface.sequelize.query(` 
 
     INSERT INTO admins (id,username, "passwordHash")
-    VALUES (1,'admin', '${passwordManager.hash('uG!&Fv7!F&@g')}');
+    VALUES (1,'admin', '${passwordManager.hash(process.env.ADMIN_PASSWORD)}');
 
 
     `);

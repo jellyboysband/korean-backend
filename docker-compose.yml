@@ -36,8 +36,8 @@ services:
   #     DB_PASSWORD: "postgres"
   #     DB_LOGGING: "false"
   #     # STATIC
-  #     STATIC_PATH: "/static"
-  #     IMAGE_PATH: "images"
+  # STATIC_PATH: "/static"
+  # IMAGE_PATH: "images"
   korean-db:
     container_name: korean-db
     image: postgres
