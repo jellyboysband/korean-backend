@@ -10,7 +10,7 @@ const create = (username, password) => {
 };
 
 const records = [];
-for (let i = 1; i <= 2; i++) {
+for (let i = 1; i <= 1; i++) {
   records.push(create(`admin${i}`, `admin${i}`));
 }
 

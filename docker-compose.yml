@@ -1,6 +1,43 @@
 version: "3.7"
 
 services:
+  # korean-backend:
+  #   container_name: korean-backend
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   image: korean-backend
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
+  #   volumes:
+  #     - /home/exorcist/Documents/korean/test:/static
+  #   entrypoint: /korean-backend
+  #   environment:
+  #     NODE_ENV: "production"
+  #     # General
+  #     APP_NAME: "korean-backend"
+  #     APP_HOST: "localhost"
+  #     APP_PORT: "8080"
+  #     LOG_ENABLED: "true"
+  #     LOG_LEVEL: "production"
+  #     ADMIN_SALT: "HJUGV@IYUYV&^@F!YGUYVUYVVuyyivytfUVUYTF@&F^@"
+  #     ADMIN_JWT_KEY: "yuf67FU&R^*YF76d7d^*D%&DTD758rf"
+  #     USER_SALT: "UYG!YVY^FYUV@F^IV@IYF@*V@IFV@IYGfadfsdf"
+  #     USER_JWT_KEY: "YVYkfYTFIkhc6DCugjcutDUYCU@YU!!cyt1yt1Y!b2iufuyGIY@Eg"
+  #     # # DB
+  #     DB_HOST: "localhost"
+  #     DB_PORT: "5432"
+  #     DB_DIALECT: "postgres"
+  #     DB_POOL_MAX: "50"
+  #     DB_POOL_MIN: "20"
+  #     DB_NAME: "postgres"
+  #     DB_USER: "postgres"
+  #     DB_PASSWORD: "postgres"
+  #     DB_LOGGING: "false"
+  #     # STATIC
+  #     STATIC_PATH: "/static"
+  #     IMAGE_PATH: "images"
   korean-db:
     container_name: korean-db
     image: postgres
@@ -11,39 +48,3 @@ services:
       POSTGRES_USER: "postgres"
       POSTGRES_DB: "postgres"
       POSTGRES_PASSWORD: "postgres"
-
-  korean-backend:
-    container_name: korean-backend
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: korean-backend
-    restart: always
-    ports:
-      - 8080:8080
-    environment:
-      # General
-      NODE_ENV: production
-      APP_NAME: korean-backend
-      APP_HOST: localhost
-      APP_PORT: "8080"
-      LOG_ENABLED: "true"
-      LOG_LEVEL: production
-
-      ADMIN_SALT: ""
-      ADMIN_JWT_KEY: ""
-      USER_SALT: ""
-      USER_JWT_KEY: ""
-      # # DB
-      DB_HOST: "localhost"
-      DB_PORT: "5432"
-      DB_DIALECT: "postgres"
-      DB_POOL_MAX: "50"
-      DB_POOL_MIN: "20"
-      DB_NAME: "postgres"
-      DB_USER: "postgres"
-      DB_PASSWORD: "postgres"
-      DB_LOGGING:
-
-      STATIC_PATH: "/home/exorcist/Documents/korean"
-      IMAGE_PATH: "images"
