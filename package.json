@@ -33,7 +33,11 @@
     "db:seed": "node_modules/.bin/sequelize db:seed",
     "db:seed:all": "node_modules/.bin/sequelize db:seed:all",
     "db:refresh": "node scripts/dbRefresh.js && node_modules/.bin/sequelize db:migrate",
-    "db:prepare": "npm run db:refresh && npm run db:seed:all"
+    "db:prepare": "npm run db:refresh && npm run db:seed:all",
+    "db:prod:clone": "node scripts/dbRefresh.js &&npm run db:prod:dump && npm run db:docker:dump && npm run db:docker:clone",
+    "db:prod:dump": "ssh -o ServerAliveInterval=60 exorcist@35.228.184.126 -p 22 'sudo docker exec -i 78  pg_dump -U postgres postgres -h 127.0.0.1' > dump.sql",
+    "db:docker:dump": "docker cp dump.sql e5ad1da44a2b:/dump.sql",
+    "db:docker:clone": "docker exec -it e5ad1da44a2b psql -U postgres -d postgres -f dump.sql -h 127.0.0.1"
   },
   "dependencies": {
     "@kasa/koa-logging": "^0.3.0",

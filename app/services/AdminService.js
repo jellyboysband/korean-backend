@@ -4,7 +4,7 @@ const Repository = require('../repositories/ServiceRepository');
 
 class AdminService {
   static async getById(id, transaction = null, lock = null) {
-    const admin = await db.models.Admin.scope(null).findOne({
+    const admin = await db.models.Admin.findOne({
       where: { id },
       transaction,
       lock

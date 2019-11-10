@@ -86,8 +86,8 @@
                 type: integer
               tags:
                 type: array
-                items: 
-                  type: integer 
+                items:
+                  type: integer
     responses:
       "200": { $ref: "#/components/responses/EditOrCreate" }
       default: { $ref: "#/components/responses/GenericError" }
@@ -124,3 +124,84 @@
     operationId: admin/ProductController.deleteImage
     parameters:
       - $ref: "#/components/parameters/Id"
+
+/admin/productExtras:
+  get:
+    security:
+      - apiKey: []
+    operationId: admin/ProductController.listExtra
+    tags:
+      - productExtra
+    parameters:
+      - $ref: "#/components/parameters/Limit"
+      - $ref: "#/components/parameters/Offset"
+      - $ref: "#/components/parameters/Order"
+    responses:
+      #"200": { $ref: "#/components/responses/ListProduct" }
+      default: { $ref: "#/components/responses/GenericError" }
+  post:
+    security:
+      - apiKey: []
+    description: "Create new product"
+    operationId: admin/ProductController.createExtra
+    tags:
+      - productExtra
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              productId:
+                type: integer
+              price:
+                type: integer
+              volume:
+                type: integer
+              weight:
+                type: integer
+    responses:
+      "200": { $ref: "#/components/responses/EditOrCreate" }
+      default: { $ref: "#/components/responses/GenericError" }
+
+/admin/productExtras/{id}:
+  delete:
+    security:
+      - apiKey: []
+    description: "Delete product"
+    operationId: admin/ProductController.deleteExtra
+    tags:
+      - productExtra
+    parameters:
+      - $ref: "#/components/parameters/Id"
+
+    responses:
+      "200": { $ref: "#/components/responses/EditOrCreate" }
+      default: { $ref: "#/components/responses/GenericError" }
+
+  put:
+    security:
+      - apiKey: []
+    description: "Create new product"
+    operationId: admin/ProductController.editExtra
+    parameters:
+      - $ref: "#/components/parameters/Id"
+    tags:
+      - productExtra
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              price:
+                type: integer
+              volume:
+                type: integer
+              weight:
+                type: integer
+    responses:
+      "200": { $ref: "#/components/responses/EditOrCreate" }
+      default: { $ref: "#/components/responses/GenericError" }

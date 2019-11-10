@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, Sequelize) => {
   const product = sequelize.define(
-    'products',
+    'extras',
     {
       id: {
         allowNull: false,
@@ -9,25 +9,21 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
-        allowNull: false,
-        type: Sequelize.TEXT
-      },
-      description: {
-        allowNull: false,
-        type: Sequelize.TEXT
-      },
-      apply: {
-        allowNull: false,
-        type: Sequelize.TEXT
-      },
-      brandId: {
+      productId: {
         allowNull: false,
         type: Sequelize.INTEGER
       },
-      avatarUrl: {
+      price: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      volume: {
         allowNull: true,
-        type: Sequelize.TEXT
+        type: Sequelize.INTEGER
+      },
+      weight: {
+        allowNull: true,
+        type: Sequelize.INTEGER
       },
       deleted: {
         allowNull: true,
@@ -46,13 +42,7 @@ module.exports = (sequelize, Sequelize) => {
   );
   // eslint-disable-next-line
   product.associate = models => {
-    models.Product.belongsTo(models.Brand, { foreignKey: 'brandId', targetKey: 'id' });
-    models.Product.hasMany(models.ProductExtra, { foreignKey: 'productId', targetKey: 'id' });
-    models.Product.belongsToMany(models.Tag, {
-      through: models.TagProduct
-    });
-
-    // models.Product.hasMany(models.Tag, { foreignKey: 'id', sourceKey: 'productId' });
+    models.ProductExtra.belongsTo(models.Product, { foreignKey: 'productId', targetKey: 'id' });
   };
   return product;
 };

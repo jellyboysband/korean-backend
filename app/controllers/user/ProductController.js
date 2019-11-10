@@ -11,13 +11,13 @@ class ProductController {
       name: product.name,
       description: product.description,
       apply: product.apply,
-      price: product.price,
       brand: {
         id: product.brand.id,
         name: product.brand.name
       },
       tags: product.tags,
-      avatarUrl: product.avatarUrl
+      avatarUrl: product.avatarUrl,
+      extras: product.extras,
     };
   }
   static async list(ctx) {
@@ -29,7 +29,6 @@ class ProductController {
           name: product.name,
           description: product.description,
           apply: product.apply,
-          price: product.price,
           brand: {
             id: product.brand.id,
             name: product.brand.name
@@ -37,7 +36,8 @@ class ProductController {
 
           tags: product.tags,
           // tags: product.tags,
-          avatarUrl: product.avatarUrl
+          avatarUrl: product.avatarUrl,
+          extras: product.extras,
         };
       }),
       limit,

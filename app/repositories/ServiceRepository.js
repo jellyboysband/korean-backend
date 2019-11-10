@@ -33,6 +33,20 @@ class ServiceRepository {
       deleted: entity.deleted
     };
   }
+  static extra(entity) {
+    if (!entity) {
+      return null;
+    }
+
+    return {
+      id: entity.id,
+      price: entity.price,
+      volume: entity.volume,
+      weight: entity.weight,
+      productId: entity.productId,
+      product: ServiceRepository.product(entity.product)
+    };
+  }
 
   static order(entity) {
     if (!entity) {
@@ -63,7 +77,8 @@ class ServiceRepository {
       brand: entity.brand ? ServiceRepository.brand(entity.brand) : null,
       tags: entity.tags ? entity.tags.map(tag => ServiceRepository.tag(tag)) : [],
       avatarUrl: entity.avatarUrl,
-      deleted: entity.deleted
+      deleted: entity.deleted,
+      extras: entity.extras ? entity.extras.map(ServiceRepository.extra) : []
     };
   }
 }

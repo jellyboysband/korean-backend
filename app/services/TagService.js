@@ -13,7 +13,7 @@ class TagService {
   }
 
   static async getById(id, transaction = null, lock = null) {
-    const tag = await db.models.Tag.scope(null).findOne({
+    const tag = await db.models.Tag.findOne({
       where: { id },
       transaction,
       lock

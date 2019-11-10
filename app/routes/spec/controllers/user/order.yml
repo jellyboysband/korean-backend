@@ -34,10 +34,10 @@
                 items:
                   type: object
                   required:
-                    - productId
+                    - extraId
                     - count
                   properties:
-                    productId:
+                    extraId:
                       $ref: "#/components/schemas/ID"
                     count:
                       minimum: 1

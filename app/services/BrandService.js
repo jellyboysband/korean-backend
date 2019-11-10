@@ -13,7 +13,7 @@ class BrandService {
   }
 
   static async getById(id, transaction = null, lock = null) {
-    const brand = await db.models.Brand.scope(null).findOne({
+    const brand = await db.models.Brand.findOne({
       where: { id },
       transaction,
       lock

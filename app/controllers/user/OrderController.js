@@ -9,12 +9,20 @@ class OrderController {
     };
   }
   static async create(ctx) {
-    const ids = ctx.BODY.list.map(it => it.productId);
-    const { list: products, count } = await ProductService.list({ id: ids });
+    const ids = ctx.BODY.list.map(it => it.extraId);
+    const { list: products, count } = await ProductService.listExtra({ id: ids });
     if (count !== ids.length) {
       ctx.throw(400, 'invalid products');
     }
-    ctx.BODY.products = products;
+    ctx.BODY.products = products.map(it => {
+      return {
+        ...it.product,
+        price: it.price,
+        extraId: it.id,
+        weight: it.weight,
+        volume: it.volume,
+      };
+    });
     const { id } = await OrderService.create(ctx.BODY);
     ctx.body = { id };
   }

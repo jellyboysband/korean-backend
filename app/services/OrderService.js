@@ -22,7 +22,7 @@ class OrderService {
         data: []
       };
       list.forEach(it => {
-        const product = products.find(p => p.id === it.productId);
+        const product = products.find(p => p.extraId === it.extraId);
         const price = product.price * it.count;
         data.cost += price;
         data.data.push({ cost: price, count: it.count, product });
@@ -38,13 +38,21 @@ class OrderService {
     return await db.sequelize.transaction(async transaction => {
       const order = await OrderService.getById(id, transaction, transaction.LOCK.UPDATE);
 
-      const { list: products } = await ProductService.list({ id: resolvedProducts.map(it => it.productId) }, transaction);
+      let { list: products } = await ProductService.listExtra({ id: resolvedProducts.map(it => it.extraId) }, transaction);
+      products.map(it => {
+        return {
+          ...it.product,
+          extraId: it.id,
+          weight: it.weight,
+          volume: it.volume,
+        };
+      });
       let cost = 0;
       const newData = [];
       resolvedProducts.forEach(it => {
-        let product = products.find(p => p.id === it.productId);
+        let product = products.find(p => p.extraId === it.extraId);
         if (!product) {
-          product = order.data.find(p => p.product.id === it.productId);
+          product = order.data.find(p => p.product.extraId === it.extraId);
         }
         product.price = it.price;
         const price = product.price * it.count;

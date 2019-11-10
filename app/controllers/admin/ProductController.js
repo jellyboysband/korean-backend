@@ -6,14 +6,14 @@ class ProductController {
     const { id } = await ProductService.create(ctx.BODY);
     ctx.body = { id };
   }
+  static async createExtra(ctx) {
+    const { id } = await ProductService.createExtra(ctx.BODY);
+    ctx.body = { id };
+  }
   static async edit(ctx) {
     const { id } = ctx.params;
     await ProductService.edit(id, ctx.BODY);
     ctx.body = { id };
-  }
-  static async delete(ctx) {
-    await ProductService.delete(ctx.PARAMS.id);
-    ctx.body = { id: ctx.PARAMS.id };
   }
   static async get(ctx) {
     const product = await ProductService.getById(ctx.PARAMS.id);
@@ -25,13 +25,13 @@ class ProductController {
       name: product.name,
       description: product.description,
       apply: product.apply,
-      price: product.price,
       brand: {
         id: product.brand.id,
         name: product.brand.name
       },
       tags: product.tags,
-      avatarUrl: product.avatarUrl
+      avatarUrl: product.avatarUrl,
+      extras: product.extras,
     };
   }
   static async list(ctx) {
@@ -43,15 +43,14 @@ class ProductController {
           name: product.name,
           description: product.description,
           apply: product.apply,
-          price: product.price,
           brand: {
             id: product.brand.id,
             name: product.brand.name
           },
 
           tags: product.tags,
-          // tags: product.tags,
-          avatarUrl: product.avatarUrl
+          avatarUrl: product.avatarUrl,
+          extras: product.extras,
         };
       }),
       limit,
@@ -87,6 +86,29 @@ class ProductController {
     }
     await ProductService.update(id, { avatarUrl: null });
     ctx.status = 200;
+  }
+
+  static async listExtra(ctx) {
+    const { list, count } = await ProductService.listExtra(ctx.QUERY);
+    ctx.body = {
+      list,
+      limit: count,
+      offset: 0,
+      count
+    };
+  }
+  static async editExtra(ctx) {
+    const { id } = ctx.params;
+    await ProductService.editExtra(id, ctx.BODY);
+    ctx.body = { id };
+  }
+  static async delete(ctx) {
+    await ProductService.delete(ctx.PARAMS.id);
+    ctx.body = { id: ctx.PARAMS.id };
+  }
+  static async deleteExtra(ctx) {
+    await ProductService.deleteExtra(ctx.PARAMS.id);
+    ctx.body = { id: ctx.PARAMS.id };
   }
 }
 module.exports = ProductController;

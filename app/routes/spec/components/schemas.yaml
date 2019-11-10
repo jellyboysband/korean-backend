@@ -1,11 +1,11 @@
-components: 
+components:
   securitySchemes:
     apiKey:
       description: Session token.
       type: apiKey
       in: header
       name: AdminCookie
-      
+
   schemas:
     BasicList:
       type: object
@@ -24,8 +24,8 @@ components:
           default: 0
           minimum: 0
         count:
-          type: integer 
-          minimum: 0 
+          type: integer
+          minimum: 0
     Brand:
       type: object
       required:
@@ -33,7 +33,7 @@ components:
         - name
       properties:
         id:
-          $ref: '#/components/schemas/ID'
+          $ref: "#/components/schemas/ID"
         name:
           type: string
     Tag:
@@ -43,7 +43,7 @@ components:
         - name
       properties:
         id:
-          $ref: '#/components/schemas/ID'
+          $ref: "#/components/schemas/ID"
         name:
           type: string
 
@@ -54,12 +54,12 @@ components:
         - name
         - description
         - apply
-        - price
         - brand
         - tags
+        - extras
       properties:
         id:
-          $ref: '#/components/schemas/ID'
+          $ref: "#/components/schemas/ID"
         name:
           type: string
           minLength: 1
@@ -68,19 +68,28 @@ components:
           type: string
         apply:
           type: string
-        price:
-          type: integer
         avatarUrl:
           oneOf:
             - type: string
-            - type: 'null'
+            - type: "null"
 
         brand:
-          $ref: '#/components/schemas/Brand'
+          $ref: "#/components/schemas/Brand"
         tags:
           type: array
           items:
-            $ref: '#/components/schemas/Tag'
+            $ref: "#/components/schemas/Tag"
+        extras:
+          type: array
+          items:
+            allOf:
+              - type: object
+                properties:
+                  id:
+                    type: integer
+                  productId:
+                    type: integer
+              - $ref: "#/components/schemas/Extra"
 
     LoginInfo:
       type: object
@@ -89,9 +98,9 @@ components:
         - password
       properties:
         username:
-          $ref: '#/components/schemas/Username'
+          $ref: "#/components/schemas/Username"
         password:
-          $ref: '#/components/schemas/Password'
+          $ref: "#/components/schemas/Password"
 
     BrandCreate:
       type: object
@@ -118,9 +127,9 @@ components:
         - name
         - description
         - apply
-        - price
         - brandId
         - tags
+        - extras
       properties:
         name:
           type: string
@@ -130,14 +139,29 @@ components:
           type: string
         apply:
           type: string
-        price:
-          type: integer
         brandId:
           type: integer
         tags:
           type: array
-          items: 
-            type: integer 
+          items:
+            type: integer
+        extras:
+          type: array
+          items:
+            $ref: "#/components/schemas/Extra"
+    Extra:
+      type: object
+      required:
+        - price
+        - volume
+        - weight
+      properties:
+        price:
+          type: integer
+        volume:
+          type: integer
+        weight:
+          type: integer
     AdminInfo:
       type: object
       required:
@@ -147,7 +171,7 @@ components:
         token:
           type: string
         username:
-          $ref: '#/components/schemas/Username'
+          $ref: "#/components/schemas/Username"
     Admin:
       type: object
       required:
@@ -155,9 +179,9 @@ components:
         - id
       properties:
         id:
-          $ref: '#/components/schemas/ID'
+          $ref: "#/components/schemas/ID"
         username:
-          $ref: '#/components/schemas/Username'
+          $ref: "#/components/schemas/Username"
 
     Username:
       type: string
