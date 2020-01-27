@@ -28,6 +28,7 @@ class ProductService {
     return Repository.product(product);
   }
 
+  // eslint-disable-next-line no-unused-vars
   static async create({ name, description, apply, price, brandId, tags = [], extras = [] }) {
     return await db.sequelize.transaction(async transaction => {
       const product = await db.models.Product.create(
@@ -36,7 +37,7 @@ class ProductService {
       );
 
 
-      await db.models.ProductExtra.bulkCreate(extras.map(it => { return { price: it.price, volume: it.volume, weight: it.weight, productId: product.id }; }), { transaction });
+      // product.extras = await db.models.ProductExtra.bulkCreate(extras.map(it => { return { price: it.price, volume: it.volume, weight: it.weight, productId: product.id }; }), { transaction, returning: true });
       await TagService.createRefs(
         tags.map(it => {
           return { tagId: it, productId: product.id };

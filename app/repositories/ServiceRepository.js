@@ -44,6 +44,7 @@ class ServiceRepository {
       volume: entity.volume,
       weight: entity.weight,
       productId: entity.productId,
+      avatarUrl: entity.avatarUrl,
       product: ServiceRepository.product(entity.product)
     };
   }
@@ -76,7 +77,7 @@ class ServiceRepository {
       brandId: entity.brand,
       brand: entity.brand ? ServiceRepository.brand(entity.brand) : null,
       tags: entity.tags ? entity.tags.map(tag => ServiceRepository.tag(tag)) : [],
-      avatarUrl: entity.avatarUrl,
+
       deleted: entity.deleted,
       extras: entity.extras ? entity.extras.map(ServiceRepository.extra) : []
     };

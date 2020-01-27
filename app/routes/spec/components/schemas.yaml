@@ -129,7 +129,7 @@ components:
         - apply
         - brandId
         - tags
-        - extras
+        # - extras
       properties:
         name:
           type: string
@@ -145,10 +145,10 @@ components:
           type: array
           items:
             type: integer
-        extras:
-          type: array
-          items:
-            $ref: "#/components/schemas/Extra"
+        # extras:
+        #   type: array
+        #   items:
+        #     $ref: "#/components/schemas/Extra"
     Extra:
       type: object
       required:
