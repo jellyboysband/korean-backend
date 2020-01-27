@@ -135,6 +135,16 @@ class ProductService {
     });
   }
 
+
+  static async getExtraById(id, transaction = null, lock = null) {
+    const extra = await db.models.ProductExtra.findOne({
+      where: { id },
+      transaction,
+      lock
+    });
+    return Repository.extra(extra);
+  }
+
   static async createExtra({ price, volume, weight, productId }) {
     return await db.sequelize.transaction(async transaction => {
       return await db.models.ProductExtra.create(
@@ -146,13 +156,17 @@ class ProductService {
 
   static async editExtra(id, { price, volume, weight }) {
     return await db.sequelize.transaction(async transaction => {
-      return await db.models.ProductExtra.update(
-        { price, volume, weight },
-        { where: { id }, transaction }
-      );
+      return await ProductService.updateExtra(id, { price, volume, weight }, transaction);
     });
   }
 
+  static async updateExtra(id, body = {}, transaction = null) {
+    const extra = await db.models.ProductExtra.update(body, {
+      transaction,
+      where: { id }
+    });
+    return Repository.extra(extra);
+  }
   static async deleteExtra(id) {
     return await db.sequelize.transaction(async transaction => {
       return await db.models.ProductExtra.update(

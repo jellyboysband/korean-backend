@@ -92,12 +92,12 @@
       "200": { $ref: "#/components/responses/EditOrCreate" }
       default: { $ref: "#/components/responses/GenericError" }
 
-/admin/products/{id}/images:
+/admin/productExtras/{id}/images:
   put:
     x-role: admin
     tags:
-      - product
-    summary: add product image
+      - productExtra
+    summary: add productextra image
     security:
       - apiKey: []
     operationId: admin/ProductController.image
@@ -117,8 +117,8 @@
   delete:
     x-role: admin
     tags:
-      - product
-    summary: rm product image
+      - productExtra
+    summary: rm productextra image
     security:
       - apiKey: []
     operationId: admin/ProductController.deleteImage

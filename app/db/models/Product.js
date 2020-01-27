@@ -25,10 +25,6 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false,
         type: Sequelize.INTEGER
       },
-      avatarUrl: {
-        allowNull: true,
-        type: Sequelize.TEXT
-      },
       deleted: {
         allowNull: true,
         defaultValue: false,

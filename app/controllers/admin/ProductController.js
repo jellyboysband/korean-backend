@@ -62,17 +62,17 @@ class ProductController {
   static async image(ctx) {
     const { id } = ctx.PARAMS;
 
-    const product = await ProductService.getById(id);
-    if (!product) {
-      ctx.throw(ctx.STATUS_CODES.NOT_FOUND, 'product not found');
+    const productExtra = await ProductService.getExtraById(id);
+    if (!productExtra) {
+      ctx.throw(ctx.STATUS_CODES.NOT_FOUND, 'productExtra not found');
     }
     let { file } = ctx.request.files;
     if (!file) {
       ctx.throw(ctx.STATUS_CODES.BAD_REQUEST, 'should have required property "files"');
     }
-    const avatarUrl = await UploadService.uploadFile({ entityId: id, entity: 'products' }, file);
+    const avatarUrl = await UploadService.uploadFile({ entityId: id, entity: 'productsExtra' }, file);
 
-    await ProductService.update(id, { avatarUrl });
+    await ProductService.updateExtra(id, { avatarUrl });
     ctx.body = {
       avatarUrl
     };
@@ -80,11 +80,11 @@ class ProductController {
 
   static async deleteImage(ctx) {
     const { id } = ctx.PARAMS;
-    const product = await ProductService.getById(id);
-    if (!product) {
-      ctx.throw(ctx.STATUS_CODES.NOT_FOUND, 'product not found');
+    const productExtra = await ProductService.getExtraById(id);
+    if (!productExtra) {
+      ctx.throw(ctx.STATUS_CODES.NOT_FOUND, 'productExtra not found');
     }
-    await ProductService.update(id, { avatarUrl: null });
+    await ProductService.updateExtra(id, { avatarUrl: null });
     ctx.status = 200;
   }
 
