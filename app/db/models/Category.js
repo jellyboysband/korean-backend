@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, Sequelize) => {
-  const tag = sequelize.define(
-    'tags',
+  const category = sequelize.define(
+    'categories',
     {
       id: {
         allowNull: false,
@@ -13,6 +13,12 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false,
         type: Sequelize.TEXT
       },
+
+      parentId: {
+        allowNull: true,
+        type: Sequelize.INTEGER
+      },
+
       deleted: {
         allowNull: true,
         defaultValue: false,
@@ -29,6 +35,8 @@ module.exports = (sequelize, Sequelize) => {
     }
   );
   // eslint-disable-next-line
-  tag.associate = models => {};
-  return tag;
+  category.associate = models => {
+    models.Category.belongsTo(models.Category, { foreignKey: 'parentId', targetKey: 'id' });
+  };
+  return category;
 };

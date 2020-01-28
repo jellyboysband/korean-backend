@@ -1,9 +1,9 @@
 'use strict';
 module.exports = (sequelize, Sequelize) => {
-  const tagProduct = sequelize.define(
-    'tagProduct',
+  const categoryProduct = sequelize.define(
+    'categoryProduct',
     {
-      tagId: {
+      categoryId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         unique: false,
@@ -20,8 +20,8 @@ module.exports = (sequelize, Sequelize) => {
     }
   );
   // eslint-disable-next-line
-  tagProduct.associate = models => {};
+  categoryProduct.associate = models => { };
   // tagProduct.removeAttribute('id');
 
-  return tagProduct;
+  return categoryProduct;
 };

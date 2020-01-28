@@ -44,8 +44,8 @@ module.exports = (sequelize, Sequelize) => {
   product.associate = models => {
     models.Product.belongsTo(models.Brand, { foreignKey: 'brandId', targetKey: 'id' });
     models.Product.hasMany(models.ProductExtra, { foreignKey: 'productId', targetKey: 'id' });
-    models.Product.belongsToMany(models.Tag, {
-      through: models.TagProduct
+    models.Product.belongsToMany(models.Category, {
+      through: models.CategoryProduct
     });
 
     // models.Product.hasMany(models.Tag, { foreignKey: 'id', sourceKey: 'productId' });
