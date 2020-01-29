@@ -1,6 +1,5 @@
 components:
   responses:
-    
     ListBrand:
       description: Getting a list of brands.
       x-summary: OK
@@ -8,31 +7,31 @@ components:
         application/json:
           schema:
             allOf:
-              - $ref: '#/components/schemas/BasicList'
+              - $ref: "#/components/schemas/BasicList"
               - type: object
                 required:
-                  - list 
+                  - list
                 properties:
-                  list: 
+                  list:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Brand'
-    ListTag:
-      description: Getting a list of tags.
+                      $ref: "#/components/schemas/Brand"
+    ListCategory:
+      description: Getting a list of categories.
       x-summary: OK
       content:
         application/json:
           schema:
             allOf:
-              - $ref: '#/components/schemas/BasicList'
+              - $ref: "#/components/schemas/BasicList"
               - type: object
                 required:
-                  - list 
+                  - list
                 properties:
-                  list: 
+                  list:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Tag'
+                      $ref: "#/components/schemas/Category"
 
     ListProduct:
       description: Receive a list of products.
@@ -41,15 +40,15 @@ components:
         application/json:
           schema:
             allOf:
-              - $ref: '#/components/schemas/BasicList'
+              - $ref: "#/components/schemas/BasicList"
               - type: object
                 required:
-                  - list 
+                  - list
                 properties:
-                  list: 
+                  list:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Product'
+                      $ref: "#/components/schemas/Product"
 
     ListAdmin:
       description: Receive a list of admins.
@@ -58,16 +57,15 @@ components:
         application/json:
           schema:
             allOf:
-              - $ref: '#/components/schemas/BasicList'
+              - $ref: "#/components/schemas/BasicList"
               - type: object
                 required:
-                  - list 
+                  - list
                 properties:
-                  list: 
+                  list:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Admin'
-
+                      $ref: "#/components/schemas/Admin"
 
     OneProduct:
       description: Getting one product.
@@ -75,7 +73,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Product'
+            $ref: "#/components/schemas/Product"
 
     GenericError:
       description: Generic error response.
@@ -83,9 +81,9 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
 
-    EditOrCreate: 
+    EditOrCreate:
       description: request after create.
       x-summary: OK
       content:
@@ -96,8 +94,8 @@ components:
               - id
             properties:
               id:
-                $ref: '#/components/schemas/ID'
-    Delete: 
+                $ref: "#/components/schemas/ID"
+    Delete:
       description: request after delete.
       x-summary: OK
       content:
@@ -108,8 +106,6 @@ components:
               - id
             properties:
               id:
-                $ref: '#/components/schemas/ID'
-
+                $ref: "#/components/schemas/ID"
     # NoContent:
     #   description: The server successfully processed the request and is not returning any content.
-

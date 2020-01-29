@@ -84,7 +84,7 @@
                 type: integer
               brandId:
                 type: integer
-              tags:
+              categories:
                 type: array
                 items:
                   type: integer

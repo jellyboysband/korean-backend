@@ -1,0 +1,46 @@
+/admin/categories:
+  post:
+    description: "Create new tag"
+    operationId: admin/CategoryController.create
+    tags:
+      - category
+    security:
+      - apiKey: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CategoryCreate"
+    responses:
+      "200": { $ref: "#/components/responses/EditOrCreate" }
+      default: { $ref: "#/components/responses/GenericError" }
+
+  get:
+    description: "Get list category"
+    tags:
+      - category
+    security:
+      - apiKey: []
+    operationId: admin/CategoryController.list
+    parameters:
+      - $ref: "#/components/parameters/Limit"
+      - $ref: "#/components/parameters/Offset"
+      - $ref: "#/components/parameters/Order"
+    responses:
+      "200": { $ref: "#/components/responses/ListCategory" }
+      default: { $ref: "#/components/responses/GenericError" }
+
+/admin/categories/{id}:
+  delete:
+    description: "Delete category"
+    operationId: admin/CategoryController.delete
+    tags:
+      - category
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: "#/components/parameters/Id"
+    responses:
+      default: { $ref: "#/components/responses/GenericError" }
+      "200": { $ref: "#/components/responses/EditOrCreate" }

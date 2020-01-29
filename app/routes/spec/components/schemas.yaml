@@ -36,16 +36,22 @@ components:
           $ref: "#/components/schemas/ID"
         name:
           type: string
-    Tag:
+
+    Category:
       type: object
       required:
         - id
         - name
+        - parentId
       properties:
         id:
           $ref: "#/components/schemas/ID"
         name:
           type: string
+        parentId:
+          oneOf:
+            - $ref: "#/components/schemas/ID"
+            - type: "null"
 
     Product:
       type: object
@@ -55,7 +61,7 @@ components:
         - description
         - apply
         - brand
-        - tags
+        - categories
         - extras
       properties:
         id:
@@ -68,17 +74,12 @@ components:
           type: string
         apply:
           type: string
-        avatarUrl:
-          oneOf:
-            - type: string
-            - type: "null"
-
         brand:
           $ref: "#/components/schemas/Brand"
-        tags:
+        categories:
           type: array
           items:
-            $ref: "#/components/schemas/Tag"
+            $ref: "#/components/schemas/Category"
         extras:
           type: array
           items:
@@ -111,15 +112,20 @@ components:
           type: string
           minLength: 1
           maxLength: 100
-    TagCreate:
+    CategoryCreate:
       type: object
       required:
         - name
+        - parentId
       properties:
         name:
           type: string
           minLength: 1
           maxLength: 100
+        parentId:
+          oneOf:
+            - $ref: "#/components/schemas/ID"
+            - type: "null"
 
     ProductCreate:
       type: object
@@ -128,7 +134,7 @@ components:
         - description
         - apply
         - brandId
-        - tags
+        - categories
         # - extras
       properties:
         name:
@@ -141,7 +147,7 @@ components:
           type: string
         brandId:
           type: integer
-        tags:
+        categories:
           type: array
           items:
             type: integer
@@ -155,6 +161,7 @@ components:
         - price
         - volume
         - weight
+        - avatarUrl
       properties:
         price:
           type: integer
@@ -162,6 +169,11 @@ components:
           type: integer
         weight:
           type: integer
+        avatarUrl:
+          oneOf:
+            - type: string
+            - type: "null"
+
     AdminInfo:
       type: object
       required:

@@ -1,0 +1,13 @@
+/categories:
+  get:
+    description: "Get list category"
+    tags:
+      - category
+    operationId: user/CategoryController.list
+    parameters:
+      - $ref: "#/components/parameters/Limit"
+      - $ref: "#/components/parameters/Offset"
+      - $ref: "#/components/parameters/Order"
+    responses:
+      "200": { $ref: "#/components/responses/ListCategory" }
+      default: { $ref: "#/components/responses/GenericError" }

@@ -22,7 +22,7 @@ class ServiceRepository {
       deleted: entity.deleted
     };
   }
-  static tag(entity) {
+  static category(entity) {
     if (!entity) {
       return null;
     }
@@ -76,7 +76,7 @@ class ServiceRepository {
       price: entity.price,
       brandId: entity.brand,
       brand: entity.brand ? ServiceRepository.brand(entity.brand) : null,
-      tags: entity.tags ? entity.tags.map(tag => ServiceRepository.tag(tag)) : [],
+      categories: entity.categories ? entity.categories.map(category => ServiceRepository.category(category)) : [],
 
       deleted: entity.deleted,
       extras: entity.extras ? entity.extras.map(ServiceRepository.extra) : []
