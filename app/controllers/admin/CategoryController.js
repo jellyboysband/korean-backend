@@ -17,7 +17,8 @@ class CategoryController {
       list: list.map(category => {
         return {
           id: category.id,
-          name: category.name
+          name: category.name,
+          parentId: category.parentId
         };
       }),
       count,

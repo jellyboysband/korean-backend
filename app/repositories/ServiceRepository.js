@@ -30,6 +30,7 @@ class ServiceRepository {
     return {
       id: entity.id,
       name: entity.name,
+      parentId: entity.parentId,
       deleted: entity.deleted
     };
   }

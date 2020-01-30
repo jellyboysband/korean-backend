@@ -1,6 +1,6 @@
 const db = require('../db');
 const Repository = require('../repositories/ServiceRepository');
-const TagService = require('./TagService');
+const CategoryService = require('./CategoryService');
 
 class ProductService {
   static async getById(id, transaction = null, lock = null) {
@@ -12,8 +12,8 @@ class ProductService {
           required: true
         },
         {
-          model: db.models.Tag,
-          as: 'tags',
+          model: db.models.Category,
+          as: 'categories',
           required: false
         },
         {
@@ -29,7 +29,7 @@ class ProductService {
   }
 
   // eslint-disable-next-line no-unused-vars
-  static async create({ name, description, apply, price, brandId, tags = [], extras = [] }) {
+  static async create({ name, description, apply, price, brandId, categories = [], extras = [] }) {
     return await db.sequelize.transaction(async transaction => {
       const product = await db.models.Product.create(
         { name, description, apply, price, brandId },
@@ -38,9 +38,9 @@ class ProductService {
 
 
       // product.extras = await db.models.ProductExtra.bulkCreate(extras.map(it => { return { price: it.price, volume: it.volume, weight: it.weight, productId: product.id }; }), { transaction, returning: true });
-      await TagService.createRefs(
-        tags.map(it => {
-          return { tagId: it, productId: product.id };
+      await CategoryService.createRefs(
+        categories.map(it => {
+          return { categoryId: it, productId: product.id };
         }),
         transaction
       );
@@ -49,7 +49,7 @@ class ProductService {
     });
   }
 
-  static async edit(id, { name, description, apply, price, brandId, tags = [] }) {
+  static async edit(id, { name, description, apply, price, brandId, categories = [] }) {
     return await db.sequelize.transaction(async transaction => {
       const data = {};
       if (typeof name !== 'undefined') {
@@ -68,11 +68,11 @@ class ProductService {
         data.brandId = brandId;
       }
       const product = await ProductService.update(id, data, transaction);
-      if (tags.length) {
-        await TagService.deleteRefs({ productId: id }, transaction);
-        await TagService.createRefs(
-          tags.map(it => {
-            return { tagId: it, productId: id };
+      if (categories.length) {
+        await CategoryService.deleteRefs({ productId: id }, transaction);
+        await CategoryService.createRefs(
+          categories.map(it => {
+            return { categoryId: it, productId: id };
           }),
           transaction
         );
@@ -95,10 +95,10 @@ class ProductService {
     if (typeof filter.id !== 'undefined') {
       where.id = filter.id;
     }
-    let whereTag = null;
-    if (typeof filter.tags !== 'undefined') {
-      whereTag = {};
-      whereTag.id = filter.tags;
+    let whereCategory = null;
+    if (typeof filter.categories !== 'undefined') {
+      whereCategory = {};
+      whereCategory.id = filter.categories;
     }
 
     const list = await db.models.Product.findAll({
@@ -115,10 +115,10 @@ class ProductService {
           required: false
         },
         {
-          model: db.models.Tag,
-          as: 'tags',
-          where: whereTag,
-          required: !!whereTag
+          model: db.models.Category,
+          as: 'categories',
+          where: whereCategory,
+          required: !!whereCategory
         }
       ],
       limit,

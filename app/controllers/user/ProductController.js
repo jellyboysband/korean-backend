@@ -15,7 +15,7 @@ class ProductController {
         id: product.brand.id,
         name: product.brand.name
       },
-      tags: product.tags,
+      categories: product.categories,
       avatarUrl: product.avatarUrl,
       extras: product.extras,
     };
@@ -34,8 +34,7 @@ class ProductController {
             name: product.brand.name
           },
 
-          tags: product.tags,
-          // tags: product.tags,
+          categories: product.categories,
           avatarUrl: product.avatarUrl,
           extras: product.extras,
         };
