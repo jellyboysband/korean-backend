@@ -1,5 +1,5 @@
 components:
-  parameters: 
+  parameters:
     Id:
       name: id
       in: path
@@ -15,14 +15,14 @@ components:
         type: integer
         minimum: 1
         maximum: 1000
-        default: 100 
+        default: 1000
     Offset:
       name: offset
       in: query
       required: true
       schema:
         type: integer
-        minimum: 0 
+        minimum: 0
         default: 0
     Order:
       name: order
@@ -33,11 +33,11 @@ components:
         type: array
         items:
           type: string
-        default: ['id']
+        default: ["id"]
     Keys:
       name: keys
       in: query
-      required: true 
+      required: true
       schema:
         type: array
         items:
