@@ -44,3 +44,21 @@
     responses:
       default: { $ref: "#/components/responses/GenericError" }
       "200": { $ref: "#/components/responses/EditOrCreate" }
+  put:
+    description: "Delete category"
+    operationId: admin/CategoryController.edit
+    tags:
+      - category
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: "#/components/parameters/Id"
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CategoryEdit"
+    responses:
+      default: { $ref: "#/components/responses/GenericError" }
+      "200": { $ref: "#/components/responses/EditOrCreate" }

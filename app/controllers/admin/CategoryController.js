@@ -2,11 +2,11 @@ const CategoryService = require('../../services/CategoryService');
 
 class CategoryController {
   static async create(ctx) {
-    let category = await CategoryService.getByName(ctx.BODY.name);
-    if (category) {
-      ctx.throw(ctx.STATUS_CODES.CONFLICT, 'category with this name exists');
-    }
-    category = await CategoryService.create(ctx.BODY);
+    //    let category = await CategoryService.getByName(ctx.BODY.name);
+    //    if (category) {
+    //      ctx.throw(ctx.STATUS_CODES.CONFLICT, 'category with this name exists');
+    //    }
+    let category = await CategoryService.create(ctx.BODY);
     ctx.body = {
       id: category.id
     };
@@ -33,6 +33,15 @@ class CategoryController {
       ctx.throw(ctx.STATUS_CODES.NOT_FOUND, 'category not found');
     }
     await CategoryService.delete(id);
+    ctx.body = { id };
+  }
+  static async edit(ctx) {
+    const { id } = ctx.PARAMS;
+    const category = await CategoryService.getById(id);
+    if (!category || category.deleted) {
+      ctx.throw(ctx.STATUS_CODES.NOT_FOUND, 'category not found');
+    }
+    await CategoryService.edit(id, ctx.BODY);
     ctx.body = { id };
   }
 }

@@ -51,7 +51,7 @@ class CategoryService {
   static async list({ limit, offset, order, ...filter }, transaction = null, lock = null) {
     order = QueryUtil.generateOrder(order, Object.keys(db.models.Admin.rawAttributes));
     const where = {};
-    const list = await db.models.Category.findAll({ where, limit, offset, transaction, lock });
+    const list = await db.models.Category.findAll({ where, limit, offset, order, transaction, lock });
     const count = await db.models.Admin.count({ where, transaction, lock });
     return {
       list: list.map(Repository.category),

@@ -126,7 +126,17 @@ components:
           oneOf:
             - $ref: "#/components/schemas/ID"
             - type: "null"
-
+    CategoryEdit:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        parentId:
+          oneOf:
+            - $ref: "#/components/schemas/ID"
+            - type: "null"
     ProductCreate:
       type: object
       required:
