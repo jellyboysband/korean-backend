@@ -63,6 +63,7 @@ class CategoryService {
 
   static async delete(id) {
     return await db.sequelize.transaction(async transaction => {
+      await db.models.Category.scope(null).update({ parentId: null }, { where: { parentId: id }, transaction });
       return await db.models.Category.update({ deleted: true }, { where: { id }, transaction });
     });
   }

@@ -95,7 +95,7 @@ class ProductService {
     if (typeof filter.id !== 'undefined') {
       where.id = filter.id;
     }
-    let whereCategory = null;
+    let whereCategory;
     if (typeof filter.categories !== 'undefined') {
       whereCategory = {};
       whereCategory.id = filter.categories;
