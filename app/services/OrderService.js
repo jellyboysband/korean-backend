@@ -2,6 +2,7 @@ const db = require('../db');
 const QueryUtil = require('../utils/QueryUtil');
 const Repository = require('../repositories/ServiceRepository');
 const ProductService = require('./ProductService');
+const TgService = require('./TgService');
 
 class OrderService {
   static async getById(id, transaction = null, lock = null) {
@@ -28,7 +29,7 @@ class OrderService {
         data.data.push({ cost: price, count: it.count, product });
       });
       const order = await db.models.Order.create(data, { transaction });
-
+      await TgService.sendNotify({ phone, cost: data.cost, url: `https://admin.beautytandem.ru/admin/order/${order.id}/edit` });
       return Repository.order(order);
     });
   }

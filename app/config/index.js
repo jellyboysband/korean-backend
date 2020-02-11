@@ -33,6 +33,11 @@ const configs = {
       database: process.env.DB_NAME,
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD
+    },
+    tgConfig: {
+      channel: process.env.CHANNEL,
+      proxyUrl: process.env.PROXY_URL || null,
+      token: process.env.TELEGRAM_TOKEN,
     }
   },
   production: {

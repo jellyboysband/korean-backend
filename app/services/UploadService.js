@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { Worker } = require('worker_threads');
 
 class UploadService {
   static async uploadFile({ entityId, entity }, file) {
@@ -9,11 +10,11 @@ class UploadService {
       case 'image/jpeg':
       case 'image/png':
       case 'image/gif':
-        destDir = '/' + process.env.IMAGE_PATH;
+        destDir = process.env.IMAGE_PATH;
         break;
       default:
         fs.unlinkSync(file.path);
-        throw new Error('invalid data');
+        throw new Error('invalid file type');
     }
 
     destDir = path.join(destDir, entity);
@@ -40,7 +41,22 @@ class UploadService {
       throw new Error('image was not saved');
     }
 
-    return path.join(destDir, filename);
+    const resizedDestDir = path.join(destDir, '50q');
+    const resizedPath = path.join(fullPath, '50q');
+    createPath(resizedPath);
+    if (file.size > 1024 * 200) {
+      const format = 'jpg';
+      const resizedFilename = filename.split('.')[0];
+      runService({
+        originalPath: path.join(fullPath, filename),
+        resizedPath: path.join(resizedPath, resizedFilename),
+        format,
+      });
+
+      return path.join(resizedDestDir, `${resizedFilename}.${format}`);
+    } else {
+      return path.join(destDir, filename);
+    }
   }
 
   static removeFile(fileName) {
@@ -83,4 +99,18 @@ function createPath(fullPath) {
   });
 }
 
+function runService({ originalPath, resizedPath, format }) {
+  return new Promise((resolve, reject) => {
+    const worker = new Worker(path.join(__dirname, '/../workers/ImageResizer.js'), {
+      workerData: JSON.stringify({ originalPath, resizedPath, format }),
+    });
+    worker.on('message', resolve);
+    worker.on('error', reject);
+    worker.on('exit', code => {
+      if (code !== 0) {
+        reject(new Error(`Worker stopped with exit code ${code}`));
+      }
+    });
+  });
+}
 module.exports = UploadService;
