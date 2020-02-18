@@ -10,7 +10,7 @@ class UploadService {
       case 'image/jpeg':
       case 'image/png':
       case 'image/gif':
-        destDir = process.env.IMAGE_PATH;
+        destDir = '/' + process.env.IMAGE_PATH;
         break;
       default:
         fs.unlinkSync(file.path);
