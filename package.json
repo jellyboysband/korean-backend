@@ -46,7 +46,7 @@
     "ajv": "^6.10.0",
     "dotenv": "^7.0.0",
     "json-schema-deref-sync": "^0.10.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "koa": "^2.7.0",
     "koa-body": "^4.1.1",
     "koa-router": "^7.4.0",
